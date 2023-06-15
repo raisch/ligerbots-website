@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
-//var Fruit = require('../models/Fruit.js');
+const express = require('express')
+const router = express.Router()
+// var Fruit = require('../models/Fruit.js');
 
 /* GET page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   // Fruit.find({}).select('name value -_id').sort({'value': -1}).limit(5).exec(function (err, fruits) {
   //   if (err) return next(err);
   //     // chart JSON data
@@ -17,9 +17,8 @@ router.get('/', function(req, res, next) {
   //     };
   //   res.render('index', {title: 'Anychart NodeJS demo', chartData: JSON.stringify(json)});
   // });
-  res.render('index', {title: "Ligerbots"});
+  res.render('index', { title: 'Ligerbots' })
   // next();
+})
 
-});
-
-module.exports = router;
+module.exports = router
