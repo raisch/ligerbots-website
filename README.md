@@ -1,109 +1,94 @@
 
-# NodeJS basic template
+# Blog Web Site Example
 
-This example shows how to run NodeJS using Express, Jade and MongoDB.
+This is a NodeJS web site using Express, EJS and MongoDB.
+ 
+## Installation
+To use this you must have:
 
-### Running
-To use this sample you must have:
+- xcode command line utils
+- mongodb
+- nodejs
 
-MongoDB installed and running, if not please checkout [MongoDb installation guide](https://docs.mongodb.com/manual/installation/).
-To check your MongoDB installation, run following command in command line:
+install xcode command line utils:
 ```
-$ mongod -version
-db version v3.0.12 # sample output
-```
-To check MongoDB status type:
-```
-$ service mongod status
-mongod start/running, process 9559 # sample output
-```
-or
-```
-$ ps -ef | grep mongod | grep -v grep
-mongodb   1085     1  0 09:51 ?        00:00:52 /usr/bin/mongod --config /etc/mongod.conf # sample output
+xcode-select --install
 ```
 
-npm package manager, if not please checkout [official npm site](https://www.npmjs.com/).
-To check your npm installation, run following command in command line:
+install mongodb on mac osx:
 ```
-$ npm -v
-1.3.10 # sample output
-```
-To start this example run commands listed below.
-
-Clone the repository from github.com to your workspace folder:
-
-```
-$ git clone git@github.com:anychart-integrations/nodejs-express-mongodb-template.git
+brew tap mongodb/brew
+brew update
+brew install mongodb-community@6.0
 ```
 
-Navigate to the repository folder:
+run mongodb service:
 ```
-$ cd nodejs-express-mongodb-template
+brew services start mongodb-community@6.0
 ```
 
-Install dependencies
+(to stop mongodb, which you shouldn't have to, but w/e... `brew services stop mongodb-community@6.0`)
+
+to test mongodb:
+```
+mongod --version
+```
+
+which should output:
+```
+db version v6.0.6
+Build Info: {
+    "version": "6.0.6",
+    "gitVersion": "26b4851a412cc8b9b4a18cdb6cd0f9f642e06aa7",
+    "modules": [],
+    "allocator": "system",
+    "environment": {
+        "distarch": "x86_64",
+        "target_arch": "x86_64"
+    }
+}
+```
+
+to install node dependencies:
 ```
 npm install
 ```
+or `npm i`
 
-Set up MongoDB:
-```
-$ mongosh < database_backup.js
-```
+## Running
 
-Start application:
+to run web server:
 ```
-$ npm start
+npm start
 ```
 
-open browser at http://localhost:3000/
-
-
-## Workspace
-Your workspace should look like:
+to quit web server:
 ```
-jnodejs-express-mongodb-template/
-    bin/
-        www         # script for starting app
-    models/
-        Fruit.js    # data model
-    public/
-        images/
-        javascripts/
-        stylesheets/
-            style.css   # css styles
-    routes/
-        index.js    # main route
-    views/
-        error.jade  # template for errors
-        index.jade  # template for main content
-        layout.jade # template for base layout
-    app.js      # main js file
-    database_backup.js  # backup for MongoDB
-    package.json    # project settings
-    README.md
-    .gitignore
+ctrl-cps
 ```
 
-## Technologies
-Platform/Language - [NodeJS](https://nodejs.org/en/)<br />
-Database - [MongoDB](https://www.mongodb.com/)<br />
-Web framework - [Express](http://expressjs.com/)<br />
-Build tool - [npm](https://www.npmjs.com/)<br />
-Template - [Jade](https://naltatis.github.io/jade-syntax-docs/)<br />
 
-## Further Learning
-* [Documentation](https://docs.anychart.com)
-* [JavaScript API Reference](https://api.anychart.com)
-* [Code Playground](https://playground.anychart.com)
-* [Technical Support](https://www.anychart.com/support)
+and finally,
 
-## License
-AnyChart NodeJS/Express/MongoDB integration sample includes two parts:
-- Code of the integration sample that allows to use Javascript library (in this case, AnyChart) with NodeJS, Express framework and MongoDB database. You can use, edit, modify it, use it with other Javascript libraries without any restrictions. It is released under [Apache 2.0 License](https://github.com/anychart-integrations/nodejs-express-mongodb-template/blob/master/LICENSE).
-- AnyChart JavaScript library. It is released under Commercial license. You can test this plugin with the trial version of AnyChart. Our trial version is not limited by time and doesn't contain any feature limitations. Check details [here](https://www.anychart.com/buy/).
+open browser to http://localhost:3000
 
-If you have any questions regarding licensing - please contact us. <sales@anychart.com>
+if you make changes to the server code, you'll need to stop and restart the server.
 
-[![Analytics](https://ga-beacon.appspot.com/UA-228820-4/Integrations/nodejs-express-mongodb-template?pixel&useReferer)](https://github.com/igrigorik/ga-beacon)
+## Design Notes
+
+This web service follows the Model-View-Controller pattern using:
+- Mongoose (ORM for Mongodb) for Models
+- EJS/HTML/Bootstrap for Views
+- NodeJS/Express as its Controller.
+
+For more about MVC (Model-View-Controller) see https://developer.mozilla.org/en-US/docs/Glossary/MVC
+
+Users create content pages using Markdown. (See below.)
+
+## Resources
+- NodeJS: https://nodejs.org/dist/latest-v18.x/docs/api/
+- MongoDB: https://www.mongodb.com/
+- Express: https://expressjs.com/
+- EJS: https://ejs.co/
+- Markdown: https://www.markdownguide.org/
+- Marked (markdown parser for nodejs): https://marked.js.org/
