@@ -29,5 +29,25 @@
       </div>
     <% }) %>
   </div>
+  
+  <div class="container">
+    <h1 class="mb-4">Students</h1>
+    <a href="/students/new" class="btn btn-success">New Student</a>
+
+    <% articles.forEach(student => { %>
+      <div class="card mt-4">
+        <div class="card-body">
+          <h4 class="card-title"><%= student.FirstName + student.LastName %></h4>
+          <div class="card-text mb-2"><%= student.Grade %></div>
+          <div <img class="img-thumbnail"   /></div>
+          <a href="students/<%= student.slug %>" class="btn btn-primary">Full profile</a>
+          <a href="students/edit/<%= student.id %>" class="btn btn-info">Edit</a>
+          <form action="/students/<%= student.id %>?_method=DELETE" method="POST" class="d-inline">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  </div>
 </body>
 </html>
