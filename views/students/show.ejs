@@ -1,0 +1,19 @@
+<div class="container">
+    <h1 class="mb-4">Students</h1>
+    <a href="/students/new" class="btn btn-success">New Student</a>
+
+    <% students.forEach(student => { %>
+      <div class="card mt-4">
+        <div class="card-body">
+          <h4 class="card-title"><%= student.firstName + student.lastName %></h4>
+          <div class="card-text mb-2"><%= student.grade.toString() %></div>
+          <div> class="img-thumbnail" <img src="<%-student.Image%>" /> </div>
+          <a href="students/<%= student.slug %>" class="btn btn-primary">Full profile</a>
+          <a href="students/edit/<%= student.id %>" class="btn btn-info">Edit</a>
+          <form action="/students/<%= student.id %>?_method=DELETE" method="POST" class="d-inline">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  </div>

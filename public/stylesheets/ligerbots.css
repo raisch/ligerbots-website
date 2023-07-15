@@ -118,6 +118,24 @@ body {
 .top-spacer {
   margin-bottom: 35px;
 }
+/*--------------- Footer ---------------*/
+.footer-contact {
+  line-height: 26pt;
+  list-style: none;
+}
+
+.footer-north{
+  list-style: none;
+}
+
+.footer-south{
+  list-style: none;
+}
+
+
+
+
+
 
 /*--------------- Index page panels ---------------*/
 

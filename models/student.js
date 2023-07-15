@@ -1,40 +1,38 @@
 const mongoose = require('mongoose')
-const marked = require('marked').parse
 const slugify = require('slugify')
-const createDomPurify = require('dompurify')
 const { JSDOM } = require('jsdom')
-const dompurify = createDomPurify(new JSDOM().window)
 
-const StudentDirSchema = new mongoose.Schema({
-  FirstName: {
+const StudentSchema = new mongoose.Schema({
+  firstName: {
     type: String,
     required: true
   },
-  LastName: {
+  lastName: {
     type: String,
     required: true 
   },
-  Image: {
+  imageUrl: {
     type: String,
     required: true
   },
-  Grade: {
-    type: String,
+  grade: {
+    type: Number,
     required: true
   },
-  Slug: {
+  slug: {
     type: String,
     required: true,
     unique: true
   }
 })
 
-ArticleSchema.pre('validate', function (next) {
-  if (this.FirstName && this.LastName) {
-    this.slug = slugify(this.Firstname + this.LastName, { lower: true, strict: true })
-  }
+StudentSchema.pre('validate', function (next) {
+  if (this.firstName && this.lastName) {
+    this.slug = slugify(this.Lastname + this.firstName, { lower: true, strict: true })
+  } next()
+  if (this.grade >= 9 && this.grade <= 12)
 next()
 
 })
 
-module.exports = mongoose.model('students', ArticleSchema)
+module.exports = mongoose.model('Student', StudentSchema)
