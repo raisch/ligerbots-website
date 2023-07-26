@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/join', (req, res) => {
+router.get('veiws/join', (req, res) => {
     res.render('veiws/join')
 })
 

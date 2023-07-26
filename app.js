@@ -19,7 +19,7 @@ app.use(methodOverride('_method'))
 
 app.get('/', async (req, res) => {
   const articles = await Article.find().sort({ createdAt: 'desc' })
-  res.render('articles/index', { articles})
+  res.render('main/home', { articles})
 })
 
 app.use('/articles', articleRouter)
