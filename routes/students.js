@@ -3,8 +3,8 @@ const Student = require('./../models/student')
 const router = express.Router()
 
 router.get('/new', (req, res) => {
-  res.render('students/new', { student: new Student})
-}) 
+  res.render('students/new', { student: new Student() })
+})
 
 router.get('/edit/:id', async (req, res) => {
   const student = await Student.findById(req.params.id)

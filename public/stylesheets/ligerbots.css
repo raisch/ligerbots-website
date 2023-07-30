@@ -56,6 +56,10 @@ body {
   vertical-align: top;
 }
 
+.container {
+  margin-top: 65px;
+}
+
 /*--------------- Header ---------------*/
 
 #header-ghost {
@@ -70,9 +74,14 @@ body {
 }
 
 .header {
-  position: relative;
+  position: absolute;
+  left:0;
+  top:0;
   margin-left: 0px;
   margin-right: 0px;
+
+  width:100%;
+  background-color: white;
 }
 
 .header ul {
@@ -80,6 +89,7 @@ body {
   list-style-type: none;
   bottom: 15%;
   left: 20%;
+
 }
 
 .header li {

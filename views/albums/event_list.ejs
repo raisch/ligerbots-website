@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/_meta') %>
+  <title><%= title %></title>
+</head>
+<body>
+  <h2><%= title %></h2>
+  <div class="container">
+    <ul>
+    <% for(let i=0,len=events.length; i<len; i++) {
+        const { anchor, label } = fmt(events[i])
+    %>
+      <li><a href="<%= anchor %>"><%= label %></a></li>
+    <%
+      }
+    %>
+    </ul>
+    <!-- 
+      <pre>
+        <%- JSON.stringify(events, null, 2) %>
+      </pre> 
+    -->
+  </div>
+</body>
+</html>

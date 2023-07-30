@@ -1,0 +1,11 @@
+{
+  "ext": "*.js,*.ejs,*.css",
+  "verbose": true,
+  "watch": [
+    "./app.js",
+    "./public",
+    "./models",
+    "./routes",
+    "./views"
+  ]
+}
