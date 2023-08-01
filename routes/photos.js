@@ -30,7 +30,7 @@ router.get('/:year', async (req, res) => {
 
 router.get('/:year/:event', async (req, res) => {
   const { year, event } = req.params
-  const photos = await PhotoAlbum.find({ year, event_name: event }, ['photos'])
+  const photos = await PhotoAlbum.find({ year, event_name: event, }, ['photos'])
   res.render('albums/photo_page', {
     photos,
     year,

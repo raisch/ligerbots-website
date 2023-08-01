@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/_meta') %>
+  <title><%= event %></title>
+</head>
+<body>
+  <h2><%= event %></h2>
+  <div class="container">
+    <ul>
+    <% for(let i=0,len=photos.length; i<len; i++) {
+    %>
+    <figure>
+    <img src="<%= photos.location_uri %> " alt="epic photo">
+    <figcaption>test caption</figcaption>
+    </figure>
+    <%
+      }
+    %>
+    </ul>
+  </div>
+</body>
+</html>
