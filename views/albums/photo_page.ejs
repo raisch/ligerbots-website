@@ -9,9 +9,10 @@
   <div class="container">
     <ul>
     <% for(let i=0,len=photos.length; i<len; i++) {
+        const photo = photos[i]
     %>
     <figure>
-    <img src="<%= photos.location_uri %> " alt="epic photo">
+    <img src="s/<%= photo %>/<%= photo.location_uri %>/" alt="epic photo">
     <figcaption>test caption</figcaption>
     </figure>
     <%
