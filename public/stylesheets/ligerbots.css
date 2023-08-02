@@ -64,43 +64,50 @@ body {
 /* Add a black background color to the top navigation */
 .topnav {
   background-color: rgb(0, 0, 0);
-  overflow: hidden;
 }
 
 /* Style the links inside the navigation bar */
 .topnav a {
+  border: none;
+  outline: none;
+  font-family: inherit;
+  margin: 0;
   float: left;
-  color: #f2f2f2;
+  font-size: 16px;
+  color: rgb(255, 255, 255);
   text-align: center;
-  padding: 4px 60px;
+  padding: 14px 60px;
   text-decoration: none;
-  font-size: 17px;
+  background-color: black;
 }
 
 .dropdown {
   float: left;
-  overflow: hidden;
 }
 
 .dropdown .dropbtn {
-  font-size: 16px;  
   border: none;
   outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
   font-family: inherit;
   margin: 0;
+  float: left;
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 14px 60px;
+  text-decoration: none;
+  background-color: black;
+  z-index: 2;
 }
 
 .navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
+  background-color: rgb(1,100,183)
 }
 
 .dropdown-content {
   display: none;
-  position: absolute;
-  background-color: #f9f9f9;
+  position: relative;
+  background-color: rgb(0, 0, 0);
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -108,7 +115,7 @@ body {
 
 .dropdown-content a {
   float: none;
-  color: black;
+  color: rgb(255, 255, 255);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -116,13 +123,16 @@ body {
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: rgb(1,100,183);
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
+.blog-header {
+  margin-top: 60px;
+}
 
 
 #header-ghost {
