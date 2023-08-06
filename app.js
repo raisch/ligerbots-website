@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
+const bodyParser = require('body-parser')
 
 // routers
 const mainRouter = require('./routes/main')
@@ -30,6 +31,7 @@ mongoose
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(methodOverride('_method'))
+app.use(bodyParser.json())
 
 app.use('/', mainRouter)
 
