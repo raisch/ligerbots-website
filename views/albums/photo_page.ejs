@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('../partials/_meta') %>
-  <title><%= event %></title>
+    <title>
+      Photos/<%= year %>/<%= event_name %>
+    </title>
 </head>
+
 <body>
-  <h2><%= event %></h2>
+  <h2>
+    Photos/<%= year %>/<%= event_name %>
+  </h2>
+
   <div class="container">
     <ul>
-    <% for(let i=0,len=photos.length; i<len; i++) {
-        const photo = photos[i]
-    %>
-    <figure>
-    <img src="s/<%= photo %>/<%= photo.location_uri %>/" alt="epic photo">
-    <figcaption>test caption</figcaption>
-    </figure>
-    <%
-      }
-    %>
+      <% photos.forEach(photo=> { %>
+        <figure>
+          <% if (photo.placement==='above' ) { %>
+            <figcaption>
+              <%= photo.caption %>
+            </figcaption>
+            <% } %>
+              <img src="<%= photo.location_uri %>" alt="epic photo">
+              <% if (photo.placement==='below' ) { %>
+                <figcaption>
+                  <%= photo.caption %>
+                </figcaption>
+                <% } %>
+        </figure>
+        <% }) %>
     </ul>
   </div>
 </body>
+
 </html>
