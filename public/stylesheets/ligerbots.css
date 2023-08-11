@@ -62,6 +62,15 @@ body {
 
 /*--------------- Header ---------------*/
 /* Add a black background color to the top navigation */
+.logo-row {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-column {
+  
+}
+
 .topnav {
   background-color: rgb(0, 0, 0);
 }
