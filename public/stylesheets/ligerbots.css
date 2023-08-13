@@ -62,13 +62,28 @@ body {
 
 /*--------------- Header ---------------*/
 /* Add a black background color to the top navigation */
+.logo-sliver{
+  width: 100%;
+  height: 8px;
+  overflow: hidden;
+}
+
+.logo-row-container{
+  width: 100%;
+  padding-bottom: 4px;
+}
+
+.big-logo{
+  padding-left: 2%;
+  width: auto
+}
 .logo-row {
   display: flex;
   justify-content: center;
 }
 
 .logo-column {
-  
+  display: inline-block;
 }
 
 .topnav {
