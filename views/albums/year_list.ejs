@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('../partials/_meta') %>
-  <title>Photo Albums</title>
+    <title>Photo Albums</title>
 </head>
+
 <body>
   <div class="container">
     <ul>
-      <% years.forEach(y => { %>
-        <li><a href="/photos/<%= y %>"/><%= y %></li>
-      <% }) %> 
+      <% years.forEach(y=> { %>
+        <li><a href="/albums/<%= y %>/events" />
+          <%= y %>
+        </li>
+        <% }) %>
     </ul>
   </div>
 </body>
+
 </html>

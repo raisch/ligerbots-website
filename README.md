@@ -76,6 +76,11 @@ if you make changes to the server code, you'll need to stop and restart the serv
 
 ## Design Notes
 
+### Resources
+- User
+- PhotoAlbum
+- Photo
+
 This web service follows the Model-View-Controller pattern using:
 - Mongoose (ORM for Mongodb) for Models
 - EJS/HTML/Bootstrap for Views
@@ -92,3 +97,18 @@ Users create content pages using Markdown. (See below.)
 - EJS: https://ejs.co/
 - Markdown: https://www.markdownguide.org/
 - Marked (markdown parser for nodejs): https://marked.js.org/
+
+
+
+GET /albums => returns a list of years
+GET /albums/:year/events => returns a list of events
+GET /albums/:year/events/:event_id => returns a list of photos for an event
+
+POST /albums => create a new album
+UPDATE /albums/:album_id => update an existing album
+DELETE /albums/:album_id => delete an existing album
+
+POST /events => create new event
+UPDATE /events/:event_id => update an existing event
+DELETE /events/:event_id => delete an existing event
+
