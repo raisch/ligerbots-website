@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 // routers
 const mainRouter = require('./routes/main')
 const articlesRouter = require('./routes/articles')
-const photosRouter = require('./routes/photos')
+const albumsRouter = require('./routes/albums')
 const studentsRouter = require('./routes/students')
 
 const SERVICE_PORT = 3000
@@ -36,7 +36,7 @@ app.use(bodyParser.json())
 app.use('/', mainRouter)
 
 app.use('/articles', articlesRouter)
-app.use('/photos', photosRouter)
+app.use('/albums', albumsRouter)
 app.use('/students', studentsRouter)
 
 app.use(express.static('public'))
