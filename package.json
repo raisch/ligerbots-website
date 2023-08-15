@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "start": "DEBUG=* nodemon ./app.js",
+    "prime_db": "./bin/prime_db",
     "env": "env"
   },
   "keywords": [

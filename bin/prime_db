@@ -1,0 +1,95 @@
+#!/usr/local/bin/node
+
+// Prime the db with some dummy photo data
+const mongoose = require('mongoose')
+
+const { Album } = require('../models/album')
+
+const MONGODB_URI = 'mongodb://localhost/blog'
+
+const primeData = [
+  {
+    active: true,
+    year: 2022,
+    event_name: 'The Big Event',
+    event_date: '2022-01-01',
+    photos: [
+      {
+        caption: 'WTF?',
+        location_uri:
+          'https://farm66.staticflickr.com/65535/53059598537_7d7e4b51e5_z.jpg'
+      }
+    ]
+  },
+  {
+    active: true,
+    year: 2022,
+    event_name: 'Another Big Event',
+    event_date: '2022-11-01',
+    photos: [
+      {
+        caption: 'With Pringles',
+        location_uri:
+          'https://farm66.staticflickr.com/65535/53060663853_22d9597791_z.jpg'
+      },
+      {
+        caption: 'Blue Goo',
+        location_uri:
+          'https://farm66.staticflickr.com/65535/53060567875_c492264465_z.jpg'
+      }
+    ]
+  },
+  {
+    active: true,
+    year: 2023,
+    event_name: 'Copy of Another Big Event',
+    event_date: '2023-01-01',
+    photos: [
+      {
+        caption: 'With Pringles',
+        location_uri:
+          'https://farm66.staticflickr.com/65535/53060663853_22d9597791_z.jpg'
+      },
+      {
+        caption: 'Blue Goo',
+        location_uri:
+          'https://farm66.staticflickr.com/65535/53060567875_c492264465_z.jpg'
+      }
+    ]
+  }
+]
+
+function dieDieDie (msg) {
+  console.error(msg)
+  process.exit(-1)
+}
+
+async function dropPhotoAlbums () {
+  console.log('dropping photoalbums')
+  return mongoose.connection.dropCollection('photoalbums')
+}
+
+async function primeDb (data) {
+  await dropPhotoAlbums()
+  data.forEach(async d => {
+    console.log(`working on ${d}`)
+    const rec = new Album(d)
+    await rec.save()
+    console.log(`saved album: ${rec}`)
+  })
+}
+
+mongoose
+  .connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+    // useCreateIndex: true
+  })
+  .catch(err => {
+    console.error(`failed to connect to mongoose: ${err}`)
+    process.exit(-1)
+  })
+  .then(async () => {
+    await primeDb(primeData).catch(err => dieDieDie(err))
+    console.log('completed')
+  })
