@@ -63,71 +63,32 @@ body {
 /*--------------- Header ---------------*/
 /* Add a black background color to the top navigation */
 .logo-sliver{
-  width: 100vp;
+  width: 100%;
   height: 32px;
   overflow: hidden;
 }
 
-.logo-row-container{
-  width: 100%;
-  padding-bottom: 4px;
-}
-
-.big-logo{
-  padding-left: 2%;
-  width: auto
-}
-.logo-row {
+.logo-container {
   display: flex;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
+  height: 50px; /* Set the desired height for the logo container */
 }
 
-.logo-column {
-  display: inline-block;
+.header-liger-logo{
+  max-width: 200%;
+  max-width: 200%
 }
 
-.navigation {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-end;
-  
-  list-style: none;
-  margin: 0; 
-  background: rgb(0, 0, 0);
+.logo {
+  max-width: 100%; /* Ensure logos don't exceed container width */
+  max-height: 100%; /* Ensure logos don't exceed container height */
 }
 
-.navigation a {
-  text-decoration: none;
-  display: block;
-  padding: 1em;
-  color: white;
-}
 
-.navigation a:hover {
-  background: #1565C0;
-}
 
-@media all and (max-width: 800px) {
-  .navigation {
-    justify-content: space-around;
-  }
-}
 
-@media all and (max-width: 600px) {
-  .navigation {
-    flex-flow: column wrap;
-    padding: 0;
-  }
-  .navigation a { 
-    text-align: center; 
-    padding: 10px;
-    border-top: 1px solid rgba(255, 255, 255,0.3); 
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
-  }
-  .navigation li:last-of-type a {
-    border-bottom: none;
-  }
-}
+
 
 .blog-header {
   margin-top: 60px;
