@@ -25,6 +25,10 @@ body {
   /* background-repeat: repeat-y; */
 }
 
+* {
+  border:1px solid red;
+}
+
 .page-body {
   margin-left: 0px;
   margin-right: 0px;
