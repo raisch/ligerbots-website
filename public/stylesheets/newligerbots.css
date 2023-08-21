@@ -1,0 +1,14 @@
+* { /* REMOVE THIS FOR PRODUCTION*/
+    border: 1px solid red;
+  }
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.logo-silver {
+    background-image: url(/images/tie-dye-silver.jpg);
+    background-size: cover;
+    max-width: 100%;
+}
+
