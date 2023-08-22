@@ -12,14 +12,13 @@
     max-width: 100%;
 }
 
-.body {
-    margin: 0;
-    padding: 0;
-  }
 .navbar-custom {
     background-color: black;
     margin: 0;
     padding: 0;
+  }
+.navbar-custom .navbar-toggler-icon {
+    color: white;
   }
 .navbar-custom .navbar-nav {
     flex-direction: row;
@@ -37,4 +36,5 @@
 .navbar-custom .nav-link:hover {
     background-color: rgb(8,86,149);
   }
+
 
