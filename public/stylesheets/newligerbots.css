@@ -12,3 +12,29 @@
     max-width: 100%;
 }
 
+.body {
+    margin: 0;
+    padding: 0;
+  }
+.navbar-custom {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+  }
+.navbar-custom .navbar-nav {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+.navbar-custom .nav-item {
+    flex: 1;
+    text-align: center;
+  }
+.navbar-custom .nav-link {
+    color: white;
+    transition: background-color 0.3s ease-in-out;
+  }
+.navbar-custom .nav-link:hover {
+    background-color: rgb(8,86,149);
+  }
+
