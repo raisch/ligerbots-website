@@ -11,84 +11,150 @@
     padding: 0;
 }
 
+
 .logo-silver {
     background-image: url(/images/tie-dye-silver.jpg);
-    background-size: cover;
-    max-width: 100%;
+    background-size: cover; /* Scale the image to cover the container */
+    background-position: center; /* Center the image within the container */
+    width: 100vw;
+    margin: 0; /* Remove default margins */
+    padding: 0; /* Remove default padding */
 }
 
-.navbar-custom {
-    background-color: black;
-    margin: 0;
-    padding: 0;
-  }
-.navbar-custom .navbar-toggler-icon {
-    color: white;
-  }
-.navbar-custom .navbar-nav {
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-  }
-.navbar-custom .nav-item {
-    flex: 1;
-    text-align: center;
-  }
-.navbar-custom .nav-link {
-    color: white;
-    transition: background-color 0.3s ease-in-out;
-  }
-.navbar-custom .nav-link:hover {
-    background-color: rgb(8,86,149);
-  }
 
-  .dropdown {
-    position: relative;
-    display: inline-block;
-    text-align: center; /* Center the dropdown button */
-  }
-  
-  .dropbtn {
-    background-color: #000000;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    max-height: 40px;
-    border: none;
-    cursor: pointer;
-    display: block; /* Ensure the button takes full width */
-    margin: auto;
-  }
+.logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-/* Dropdown Content (Hidden by Default) */
+.logo {
+  margin: 5px; /* Adjust spacing between logos */
+}
+
+.logo.large {
+  flex: 2; /* Large logo takes up 60% of the width */
+  max-width: calc(60% - 10px); /* 60% of the width minus spacing */
+}
+
+.logo.small {
+  flex: 1; /* Smaller logos take up the remaining space */
+  max-width: calc(16.666% - 10px); /* Six smaller logos evenly spaced (100% / 6) with spacing */
+  width: 80px; /* Fixed width for smaller logos */
+}
+
+/* Apply changes at a specific breakpoint */
+@media screen and (max-width: 768px) {
+  .logo.large {
+    max-width: calc(100% - 10px); /* Large logo takes full width on smaller screens */
+  }
+  .logo.small {
+    max-width: calc(50% - 10px); /* Two smaller logos in a row on smaller screens */
+  }
+  .logo-row {
+    flex-direction: column;
+  }
+}
+
+
+
+
+.topnav {
+  overflow: hidden;
+  background-color: rgb(0, 0, 0);
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+
+.topnav .icon {
+  display: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 17px;    
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: black;
+  background-color: #f9f9f9;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
-/* Links inside the dropdown */
 .dropdown-content a {
-  color: white;
+  float: none;
+  color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  text-align: left;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: var(--liger-blue)}
+.topnav a:hover, .dropdown:hover .dropbtn {
+  background-color: var(--liger-blue);
+  color: white;
+}
 
-/* Show the dropdown menu on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-  background-color: black;
+@media screen and (max-width: 874px) {
+  .topnav a:not(:first-child), .dropdown .dropbtn {
+    display: none;
+  }
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
 }
 
-
+@media screen and (max-width: 874px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .topnav.responsive .dropdown {float: none;}
+  .topnav.responsive .dropdown-content {position: relative;}
+  .topnav.responsive .dropdown .dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
