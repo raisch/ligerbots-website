@@ -12,6 +12,8 @@
 }
 
 
+
+
 .logo-silver {
     background-image: url(/images/header/tie-dye-silver.jpg);
     background-size: cover; /* Scale the image to cover the container */
@@ -25,8 +27,8 @@
 .logo-row {
   display: flex;
   align-items: center;
-  justify-content: left;
   flex-wrap: wrap;
+  flex-grow: 1;
 }
 
 .logo {
@@ -35,24 +37,23 @@
 
 .logo.large {
   flex: 2; /* Large logo takes up 60% of the width */
-  max-width: calc(60% - 10px); /* 60% of the width minus spacing */
+  max-width: calc(70% - 10px); /* 60% of the width minus spacing */
   padding-left: 12px;
+  width: auto;
+  height: auto;
 }
 
 .logo.small {
-  max-width: calc(16.666%); /* Six smaller logos evenly spaced (100% / 6) with spacing */
-  width: 30px; 
-  height: 30px; 
-  object-fit: contain;
+  max-width: calc((30% / 6) - 5px ); /* Six smaller logos evenly spaced (100% / 6) with spacing */
+  width: auto; 
+  height: auto; 
+  padding: 5px;
   margin: 2px;
 }
 
-.logo.small:first-child {
-  margin: 20px !important;
-}
 
 /* Apply changes at a specific breakpoint */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 874px) {
   .logo.large {
     max-width: calc(100% - 10px); /* Large logo takes full width on smaller screens */
   }
@@ -169,3 +170,7 @@
     text-align: left;
   }
 }
+
+
+
+
