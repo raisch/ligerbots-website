@@ -13,7 +13,7 @@
 
 
 .logo-silver {
-    background-image: url(/images/tie-dye-silver.jpg);
+    background-image: url(/images/header/tie-dye-silver.jpg);
     background-size: cover; /* Scale the image to cover the container */
     background-position: center; /* Center the image within the container */
     width: 100vw;
@@ -25,7 +25,7 @@
 .logo-row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   flex-wrap: wrap;
 }
 
@@ -36,12 +36,19 @@
 .logo.large {
   flex: 2; /* Large logo takes up 60% of the width */
   max-width: calc(60% - 10px); /* 60% of the width minus spacing */
+  padding-left: 12px;
 }
 
 .logo.small {
-  flex: 1; /* Smaller logos take up the remaining space */
-  max-width: calc(16.666% - 10px); /* Six smaller logos evenly spaced (100% / 6) with spacing */
-  width: 80px; /* Fixed width for smaller logos */
+  max-width: calc(16.666%); /* Six smaller logos evenly spaced (100% / 6) with spacing */
+  width: 30px; 
+  height: 30px; 
+  object-fit: contain;
+  margin: 2px;
+}
+
+.logo.small:first-child {
+  margin: 20px !important;
 }
 
 /* Apply changes at a specific breakpoint */
@@ -49,9 +56,11 @@
   .logo.large {
     max-width: calc(100% - 10px); /* Large logo takes full width on smaller screens */
   }
+ 
   .logo.small {
-    max-width: calc(50% - 10px); /* Two smaller logos in a row on smaller screens */
+      display: none;
   }
+  
   .logo-row {
     flex-direction: column;
   }
@@ -73,6 +82,7 @@
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  
 }
 
 
@@ -91,7 +101,7 @@
   outline: none;
   color: white;
   padding: 14px 16px;
-  background-color: inherit;
+  background-color: black;
   font-family: inherit;
   margin: 0;
 }
@@ -99,7 +109,7 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
+  background-color: black;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -107,10 +117,10 @@
 
 .dropdown-content a {
   float: none;
-  color: black;
+  color: white;
   padding: 12px 16px;
   text-decoration: none;
-  display: block;
+  display: contents;
   text-align: left;
 }
 
@@ -120,13 +130,14 @@
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: var(--liger-blue);
+  color: rgb(255, 255, 255);
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
 
 @media screen and (max-width: 874px) {
   .topnav a:not(:first-child), .dropdown .dropbtn {
