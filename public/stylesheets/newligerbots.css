@@ -27,18 +27,18 @@ body {
 }
 
 
-.logo-row {
+.header-logo-row {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   flex-grow: 1;
 }
 
-.logo {
+.header-logo {
   margin: 5px; /* Adjust spacing between logos */
 }
 
-.logo.large {
+.header-logo.large {
   flex: 2; /* Large logo takes up 60% of the width */
   max-width: calc(70% - 10px); /* 60% of the width minus spacing */
   padding-left: 12px;
@@ -46,7 +46,7 @@ body {
   height: auto;
 }
 
-.logo.small {
+.header-logo.small {
   max-width: calc((30% / 6) - 5px ); /* Six smaller logos evenly spaced (100% / 6) with spacing */
   width: auto; 
   height: auto; 
@@ -57,15 +57,15 @@ body {
 
 /* Apply changes at a specific breakpoint */
 @media screen and (max-width: 874px) {
-  .logo.large {
+  .header-logo.large {
     max-width: calc(100% - 10px); /* Large logo takes full width on smaller screens */
   }
  
-  .logo.small {
+  .header-logo.small {
       display: none;
   }
   
-  .logo-row {
+  .header-logo-row {
     flex-direction: column;
   }
 }
@@ -182,60 +182,69 @@ body {
   }
 }
 
+
+
 .footer {
-  height: 400px;
   background-color: var(--liger-blue);
+  color:white;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
-.liger-logo {
-  width: 215px;
-  height: auto;
+/* Style the logo container */
+.footer-logo {
+  margin-right: 60px;
 }
 
+/* Style the circular logo */
+.logo {
+  width: 10px; /* Adjust the size as needed */
+  height: 10px;
+  border-radius: 50%; /* Make it circular */
+  display: block; /* Remove extra space below the image */
+  margin: 0 auto; /* Center the logo vertically */
+}
+
+/* Style the lists container */
 .footer-content {
-  display: flex;
-  align-items: center;
+  display: flex; /* Display lists side by side */
   justify-content: center;
+  align-items: flex-start; /* Align to the top */
 }
 
-.centered-content {
-  margin-right: 5%;
-}
-
-.footer-lists {
-  color: white;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  margin-top: 1px;
-}
-
+/* Style the individual list containers */
 .footer-list {
+  margin-top: 10px; /* Small top margin */
+  margin-right: 20px; /* Margin between the two lists */
+}
+
+/* Style the lists */
+.footer-list ul {
   list-style: none;
-  margin: 0;
   padding: 0;
-  text-align: center;
+  margin: 0; /* Remove margin to avoid extra space */
 }
 
 .footer-list li {
-  margin-bottom: 5px;
+  margin-bottom: 5px; /* Margin between list items */
+  font-size: 16px; /* Default font size */
+  font-weight: normal; /* Default font weight */
+}
+.footer-list li:first-child {
+  font-style: italic; /* Italicize the first item */
+  font-weight: bold; /* Make it bold */
 }
 
-.footer-title {
-  font-size: 28px;
-  font-style: italic;
-  margin-bottom: 10px;
-  margin-top: 0; /* Remove margin-top from footer-title */
+/* Style the row of logos */
+.footer-logos {
+  display: flex;
+  align-items: center;
 }
 
-.footer-lists ul {
-  margin: 0 15px;
-}
-
-.footer-lists ul:first-child {
-  margin-right: 30px; /* Add margin to separate the lists */
+/* Style individual logos (adjust as needed) */
+.footer-logos img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px; /* Margin between logos */
 }
