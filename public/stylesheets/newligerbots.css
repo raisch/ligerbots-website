@@ -3,9 +3,9 @@
 }
 
 
-/* * {
+* {
     border: 1px solid red;
-  } */
+  }
 /* * {
     margin: 0;
     padding: 0;
@@ -33,6 +33,7 @@ body {
   flex-wrap: wrap;
   flex-grow: 1;
 }
+
 
 .header-logo {
   margin: 5px;
