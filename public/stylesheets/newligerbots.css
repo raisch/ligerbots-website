@@ -3,27 +3,27 @@
 }
 
 
-/* * { REMOVE THIS FOR PRODUCTION
+/* * {
     border: 1px solid red;
   } */
 /* * {
     margin: 0;
     padding: 0;
-}
+} */
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-} */
+}
 
 
 .logo-silver {
     background-image: url(/images/header/tie-dye-silver.jpg);
-    background-size: cover; /* Scale the image to cover the container */
-    background-position: center; /* Center the image within the container */
+    background-size: cover; 
+    background-position: center; 
     width: 100vw;
-    margin: 0; /* Remove default margins */
-    padding: 0; /* Remove default padding */
+    margin: 0; 
+    padding: 0;
 }
 
 
@@ -35,27 +35,28 @@ body {
 }
 
 .header-logo {
-  margin: 5px; /* Adjust spacing between logos */
+  margin: 5px;
 }
 
 .header-logo.large {
-  flex: 2; /* Large logo takes up 60% of the width */
-  max-width: calc(70% - 10px); /* 60% of the width minus spacing */
-  padding-left: 12px;
+  flex: 2; 
+  max-width: calc(60% - 10px); 
+  padding-left: 2px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-right: 20px;
   width: auto;
   height: auto;
 }
 
 .header-logo.small {
-  max-width: calc((30% / 6) - 5px ); /* Six smaller logos evenly spaced (100% / 6) with spacing */
+  max-width: calc((25% / 6) - 5px ); 
   width: auto; 
   height: auto; 
-  padding: 5px;
-  margin: 2px;
+  margin:  auto;
 }
 
 
-/* Apply changes at a specific breakpoint */
 @media screen and (max-width: 874px) {
   .header-logo.large {
     max-width: calc(100% - 10px); /* Large logo takes full width on smaller screens */
@@ -78,7 +79,6 @@ body {
   overflow: hidden;
 }
 
-/* Style the links inside the navigation bar */
 .topnav a {
   float: left;
   display: block;
@@ -89,18 +89,15 @@ body {
   font-size: 17px;
 }
 
-/* Hide the link that should open and close the topnav on small screens */
 .topnav .icon {
   display: none;
 }
 
-/* Dropdown container - needed to position the dropdown content */
 .dropdown {
   float: left;
   overflow: hidden;
 }
 
-/* Style the dropdown button to fit inside the topnav */
 .dropdown .dropbtn {
   font-size: 17px;
   border: none;
@@ -112,7 +109,6 @@ body {
   margin: 0;
 }
 
-/* Style the dropdown content (hidden by default) */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -122,7 +118,6 @@ body {
   z-index: 1;
 }
 
-/* Style the links inside the dropdown */
 .dropdown-content a {
   float: none;
   color: white;
@@ -132,13 +127,11 @@ body {
   text-align: left;
 }
 
-/* Add a dark background on topnav links and the dropdown button on hover */
 .topnav a:hover, .dropdown:hover .dropbtn {
   background-color: var(--liger-blue);
   color: white;
 }
 
-/* Add a grey background to dropdown links on hover */
 .dropdown-content a:hover {
   background-color: var(--liger-blue);
   color:white;
@@ -147,9 +140,8 @@ body {
 /* Show the dropdown menu when the user moves the mouse over the dropdown button */
 .dropdown:hover .dropdown-content {
   display: block;
-}
 
-/* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
+}
 @media screen and (max-width: 874px) {
   .topnav a:not(:first-child), .dropdown .dropbtn {
     display: none;
@@ -187,64 +179,48 @@ body {
 .footer {
   background-color: var(--liger-blue);
   color:white;
+  height: 400px;
+  padding: 20px;
+}
+
+.footer-content {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
-/* Style the logo container */
-.footer-logo {
-  margin-right: 60px;
+.footer-logo img {
+  max-height: 200px; 
+  margin-right: 10px;
+  margin-left: 150px;
+  float: left;
 }
 
-/* Style the circular logo */
-.logo {
-  width: 10px; /* Adjust the size as needed */
-  height: 10px;
-  border-radius: 50%; /* Make it circular */
-  display: block; /* Remove extra space below the image */
-  margin: 0 auto; /* Center the logo vertically */
+
+
+.footer-lists {
+  overflow: hidden;
 }
 
-/* Style the lists container */
-.footer-content {
-  display: flex; /* Display lists side by side */
-  justify-content: center;
-  align-items: flex-start; /* Align to the top */
-}
-
-/* Style the individual list containers */
-.footer-list {
-  margin-top: 10px; /* Small top margin */
-  margin-right: 20px; /* Margin between the two lists */
-}
-
-/* Style the lists */
-.footer-list ul {
+.footer-left-list, .footer-right-list {
   list-style: none;
   padding: 0;
-  margin: 0; /* Remove margin to avoid extra space */
+  margin: 0;
 }
 
-.footer-list li {
-  margin-bottom: 5px; /* Margin between list items */
-  font-size: 16px; /* Default font size */
-  font-weight: normal; /* Default font weight */
-}
-.footer-list li:first-child {
-  font-style: italic; /* Italicize the first item */
-  font-weight: bold; /* Make it bold */
+.footer-left-list li, .footer-right-list li {
+  margin-bottom: 10px;
 }
 
-/* Style the row of logos */
-.footer-logos {
-  display: flex;
-  align-items: center;
+.footer-left-list li:first-child strong em {
+  font-weight: bold;
+  font-style: italic;
+  font-size: larger; 
+  display: inline;
 }
 
-/* Style individual logos (adjust as needed) */
-.footer-logos img {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px; /* Margin between logos */
-}
+
+
+
+
+
+
