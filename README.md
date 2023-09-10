@@ -98,17 +98,15 @@ Users create content pages using Markdown. (See below.)
 - Markdown: https://www.markdownguide.org/
 - Marked (markdown parser for nodejs): https://marked.js.org/
 
+## DOCS
+[API Documentation](./docs/API.md)
+[Data Model Doctumentation](./docs/DataModel.md)
+[Todos](./docs/TODOS.md)
 
 
-GET /albums => returns a list of years
-GET /albums/:year/events => returns a list of events
-GET /albums/:year/events/:event_id => returns a list of photos for an event
 
-POST /albums => create a new album
-UPDATE /albums/:album_id => update an existing album
-DELETE /albums/:album_id => delete an existing album
+### USERS ROUTES
 
-POST /events => create new event
-UPDATE /events/:event_id => update an existing event
-DELETE /events/:event_id => delete an existing event
+### ARTICLES ROUTES
 
+GET /articles => returns a list of all articles

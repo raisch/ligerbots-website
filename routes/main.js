@@ -1,6 +1,9 @@
+/* eslint-disable camelcase */
+/** @module */
+
 const express = require('express')
 
-const Article = require('../models/article')
+const { Article } = require('../models/Article')
 
 const router = express.Router()
 

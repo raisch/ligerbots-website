@@ -1,0 +1,2 @@
+- add validation to all models
+- 

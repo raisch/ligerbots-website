@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+/** @module */
 
 /*
 POST /photos => create a new photo (requires a year and an event)
@@ -8,20 +9,15 @@ DELETE /photos/:photo_id
 
 const _ = require('lodash')
 const express = require('express')
-const { Photo } = require('./../models/photo')
-const { Album } = require('./../models/album')
+const { Photo } = require('./../models/Photo')
+const { PhotoAlbum } = require('./../models/PhotoAlbum')
 const router = express.Router()
 
 router.post('/', async (req, res) => {})
 
-// router.update('/:photo_id', async (req, res) => {})
-
-// router.delete('/:photo_id', async (req, res) => {})
-
 router.get('/', async (req, res) => {
-  // route /photos
-  // route = /photos
-  const recs = await Album.find({}, ['year']) // returns [ { _id: '', year: '2023' }, ... ]
+  // route /api/albums
+  const recs = await PhotoAlbum.find({}, ['year']) // returns [ { _id: '', year: '2023' }, ... ]
 
   const years = _.sortedUniq(
     _.map(recs, rec => rec.year) // [ '2023', '2022', ... ]
@@ -38,7 +34,7 @@ router.get('/:year', async (req, res) => {
   // route /photos/2022
   // /photos/2023
   const year = req.params.year
-  const events = await Album.find({ year }, ['event_name', 'event_date'])
+  const events = await PhotoAlbum.find({ year }, ['event_name', 'event_date'])
   res.render('albums/event_list', {
     events,
     year,
@@ -56,7 +52,7 @@ router.get('/:year', async (req, res) => {
 router.get('/:year/:event_name', async (req, res) => {
   // route: /photos/2022/eventNme
   const { year, event_name } = req.params
-  const result = await Album.findOne({ year, event_name })
+  const result = await PhotoAlbum.findOne({ year, event_name })
   console.log(JSON.stringify({ result }, null, 2))
   res.render('albums/photo_page', {
     photos: result.photos,
@@ -80,7 +76,7 @@ router.post('/:year/:event_name/photo', async (req, res) => {
 
   console.log(JSON.stringify({ params: req.params, body: req.body }))
 
-  const album = await Album.findOne({ year, event_name })
+  const album = await PhotoAlbum.findOne({ year, event_name })
 
   const photo = new Photo({
     caption,
