@@ -1,14 +1,15 @@
 
-# Blog Web Site Example
+# Ligerbots Web Site
 
 This is a NodeJS web site using Express, EJS and MongoDB.
  
 ## Installation
-To use this you must have:
+To develop with this you must have:
 
 - xcode command line utils
 - mongodb
-- nodejs
+- nodejs + npm
+- yarn
 
 install xcode command line utils:
 ```
@@ -49,11 +50,20 @@ Build Info: {
 }
 ```
 
+to install node + npm, using brew:
+```
+brew install node
+```
+
+to install yarn, using npm:
+```
+npm install -g yarn 
+```
+
 to install node dependencies:
 ```
-npm install
+yarn
 ```
-or `npm i`
 
 ## Running
 
@@ -64,22 +74,18 @@ npm start
 
 to quit web server:
 ```
-ctrl-cps
+ctrl-c
 ```
 
-
-and finally,
-
-open browser to http://localhost:3000
-
-if you make changes to the server code, you'll need to stop and restart the server.
+and finally, once the server is running, open browser to http://localhost:3000
 
 ## Design Notes
 
 ### Resources
-- User
-- PhotoAlbum
+- Article
 - Photo
+- PhotoAlbum
+- User
 
 This web service follows the Model-View-Controller pattern using:
 - Mongoose (ORM for Mongodb) for Models
@@ -99,14 +105,6 @@ Users create content pages using Markdown. (See below.)
 - Marked (markdown parser for nodejs): https://marked.js.org/
 
 ## DOCS
-[API Documentation](./docs/API.md)
-[Data Model Doctumentation](./docs/DataModel.md)
-[Todos](./docs/TODOS.md)
-
-
-
-### USERS ROUTES
-
-### ARTICLES ROUTES
-
-GET /articles => returns a list of all articles
+- [API Documentation](./docs/API.md)
+- [Data Model Doctumentation](./docs/DataModel.md)
+- [Todos](./docs/TODOS.md)
