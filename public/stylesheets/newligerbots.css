@@ -176,35 +176,28 @@ body {
 
 .sidebar-left{
   background-color: #f7f7f7;
-}
-.left-sidebar-container{
-  max-width: 17%;
-  height: 1000px;
-  background-color: #F7F7F7;
-}
-
-.left-sidebar-inner-container{
-  max-width: 100%;
-  height: auto;
-  padding-bottom: 0;
-  padding-left: 4%;
-  padding-right: 8%;
-  background-color: inherit;
+  width: 19%;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
 }
 
-.left-sidebar-inner-container ul{
-  text-align: left;
+.sidebar-left-container{
   margin-top: 15px;
+  text-align: left;
+  width: 85%;
+}
+
+.sidebar-left-container ul {
+  list-style-type: none;
+  padding: 0;
   margin: 0;
 }
 
-.right-sidebar-container{
-  max-width: 17%;
-  height: 1000px;
-  background-color: #F7F7F7;
-  position: absolute;
-  right: 0;
+.sidebar-left-container hr {
+  padding: 2px;
 }
+
 
 .footer {
   background-color: var(--liger-blue);
