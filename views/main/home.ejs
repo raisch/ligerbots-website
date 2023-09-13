@@ -7,8 +7,11 @@
 
   <body>
     <%- include('../partials/_header') %>
-    <%-include('../partials/_sideBarLeft')%>
-    <%-include('../partials/_sideBarRight')%>
+    <div class="body-container">
+      <%-include('../partials/_sideBarLeft')%>
+      <%-include('../partials/_mainBody')%>
+      <%-include('../partials/_sideBarRight')%>
+    </div>
     <%-include('../partials/_footer')%>
   </body>
 </html>
