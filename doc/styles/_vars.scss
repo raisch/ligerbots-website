@@ -1,0 +1,68 @@
+:root {
+  // SS Colors
+  --ss-black: #000000;
+  --ss-white: #ffffff;
+  --ss-red: #fe0000;
+  --ss-light-green: #a0ee80;
+  --ss-light-yellow: #f0ee40;
+  --ss-light-purple: #a0a0ee;
+  
+  --ss-brand-orange: #f89c25;
+  --ss-brand-blue: #0f2644;
+
+  // Colors
+  --primary-color: #0664a8;
+  --secondary-color: #107e7d; // #ca2d00;
+  --link-color: var(--primary-color);
+  --link-hover-color: var(--primary-color);
+  --border-color: #eee;
+  --code-color: #666;
+  --code-attention-color: #ca2d00;
+  --text-color: #4a4a4a;
+  --light-font-color: #999;
+  --supporting-color: #7097b5;
+  --heading-color: var(--text-color);
+  --subheading-color: var(--secondary-color);
+  --heading-background: #f7f7f7;
+  --code-bg-color: #f8f8f8;
+
+  // Navigation
+  --nav-title-color: var(--ss-brand-orange); // --nav-title-color: var(--primary-color);
+  --nav-title-align: center;
+  --nav-title-size: 2rem; // --nav-title-size: 1rem;
+  --nav-title-margin-bottom: 1em; // --nav-title-margin-bottom: 1.5em;
+  --nav-title-font-weight: 900; // --nav-title-font-weight: 600;
+  --nav-list-margin-left: 2em;
+  --nav-bg-color: var(--ss-brand-blue); // --nav-bg-color: var(--ss-nav-bg-color);
+  --nav-heading-display: block;
+  --nav-heading-color: var(--ss-white); // --nav-heading-color: #aaa;
+  --nav-link-color: var(--nav-title-color); // --nav-link-color: #666;
+  --nav-text-color: #aaa;
+  --nav-type-class-color: #fff;
+  --nav-type-class-bg: #FF8C00;
+  --nav-type-member-color: var(--ss-black); // --nav-type-member-color: #39b739;
+  --nav-type-member-bg: var(--ss-light-purple); // --nav-type-member-bg: #d5efd5;
+  --nav-type-function-color: var(--ss-black); // --nav-type-function-color: #549ab9;
+  --nav-type-function-bg: var(--ss-light-green); // --nav-type-function-bg: #e1f6ff;
+  --nav-type-namespace-color: var(--ss-black); // --nav-type-namespace-color: #eb6420;
+  --nav-type-namespace-bg: var(--ss-light-yellow); // --nav-type-namespace-bg: #fad8c7;
+  --nav-type-typedef-color: #964cb1;
+  --nav-type-typedef-bg: #f2e4f7;
+  --nav-type-module-color: var(--ss-black); // --nav-type-module-color: #964cb1;
+  --nav-type-module-bg: var(--ss-red); // --nav-type-module-bg: #f2e4f7;
+  --nav-type-event-color: #948b34;
+  --nav-type-event-bg: #fff6a6;
+
+  // Layout
+  --max-content-width: 900px;
+  --nav-width: 500px; // --nav-width: 320px;
+  --padding-unit: 30px;
+  --layout-footer-color: #aaa;
+  --member-name-signature-display: none; // hide by default
+
+  // Fonts
+  --base-font-size: 16pt; // --base-font-size: 16px;
+  --base-line-height: 1.7;
+  --body-font: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --code-font: Consolas, Monaco, 'Andale Mono', monospace;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Ligerbots Website NG: routes/articles.js</title>
+    
+      <link type="text/css" rel="stylesheet" href="styles/vendor/prism-tomorrow-night.css">
+    
+    <link type="text/css" rel="stylesheet" href="styles/styles.css">
+    
+</head>
+<body>
+
+<header class="layout-header">
+  
+  <h1>
+    <a href="./index.html">
+      Ligerbots Website NG
+    </a>
+  </h1>
+  <nav class="layout-nav">
+    <ul><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-PhotoAlbum%2520model.html">PhotoAlbum model</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-PhotoAlbum%252520model.html#~PhotoAlbumSchema">PhotoAlbumSchema</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-app.html">app</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-models_User.html">models/User</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-models_User.html#~UserSchema">UserSchema</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-models_article.html">models/article</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-models_photo.html">models/photo</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_albums.html">routes/albums</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_articles.html">routes/articles</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_events.html">routes/events</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_index.html">routes/index</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_main.html">routes/main</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_photos.html">routes/photos</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_users.html">routes/users</a></span></li></ul><ul><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="global.html#PhotoAlbumModel">PhotoAlbumModel</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="global.html#PhotoAlbumSchema">PhotoAlbumSchema</a></span></li></ul>
+  </nav>
+</header>
+
+
+<main class="layout-main  layout-content--source">
+  <div class="container">
+    <p class="page-kind">source</p>
+    <h1 class="page-title">routes/articles.js</h1>
+    
+
+
+
+    
+
+<section>
+    <article>
+        <pre id="source" class="source-page line-numbers"><code class="language-js">/* eslint-disable camelcase */
+/** @module */
+
+const express = require('express')
+const Article = require('./../models/Article')
+const router = express.Router()
+
+router.get('/new', (req, res) => {
+  res.render('articles/new', { article: new Article() })
+})
+
+router.get('/edit/:id', async (req, res) => {
+  const article = await Article.findById(req.params.id)
+  res.render('articles/edit', { article })
+})
+
+router.get('/:slug', async (req, res) => {
+  const article = await Article.findOne({ slug: req.params.slug })
+  if (article == null) res.redirect('/')
+  const reqFields = Object.keys(req).join('\n')
+  res.render('articles/show', { article, reqFields })
+})
+
+router.post(
+  '/',
+  async (req, res, next) => {
+    req.article = new Article()
+    next()
+  },
+  saveArticleAndRedirect('new')
+)
+
+router.put(
+  '/:id',
+  async (req, res, next) => {
+    req.article = await Article.findById(req.params.id)
+    next()
+  },
+  saveArticleAndRedirect('edit')
+)
+
+router.delete('/:id', async (req, res) => {
+  await Article.findByIdAndDelete(req.params.id)
+  res.redirect('/')
+})
+
+function saveArticleAndRedirect (path) {
+  return async (req, res) => {
+    let article = req.article
+    article.title = req.body.title
+    article.description = req.body.description
+    article.markdown = req.body.markdown
+    try {
+      article = await article.save()
+      res.redirect(`/articles/${article.slug}`)
+    } catch (err) {
+      console.error(err)
+      res.render(`articles/${path}`, { article })
+    }
+  }
+}
+
+module.exports = router
+</code></pre>
+    </article>
+</section>
+
+
+
+
+  </div>
+</main>
+
+<footer class="layout-footer">
+  <div class="container">
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sat Sep 16 2023 16:30:31 GMT-0400 (Eastern Daylight Time)
+  </div>
+</footer>
+
+
+
+<script src="scripts/prism.dev.js"></script>
+</body>
+</html>

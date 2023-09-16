@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Ligerbots Website NG: </title>
+    
+      <link type="text/css" rel="stylesheet" href="styles/vendor/prism-tomorrow-night.css">
+    
+    <link type="text/css" rel="stylesheet" href="styles/styles.css">
+    
+</head>
+<body>
+
+<header class="layout-header">
+  
+  <h1>
+    <a href="./index.html">
+      Ligerbots Website NG
+    </a>
+  </h1>
+  <nav class="layout-nav">
+    <ul><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-PhotoAlbum%2520model.html">PhotoAlbum model</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-PhotoAlbum%252520model.html#~PhotoAlbumSchema">PhotoAlbumSchema</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-app.html">app</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-models_User.html">models/User</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-models_User.html#~UserSchema">UserSchema</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-models_article.html">models/article</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-models_photo.html">models/photo</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_albums.html">routes/albums</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_articles.html">routes/articles</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_events.html">routes/events</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_index.html">routes/index</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_main.html">routes/main</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_photos.html">routes/photos</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_users.html">routes/users</a></span></li></ul><ul><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="global.html#PhotoAlbumModel">PhotoAlbumModel</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="global.html#PhotoAlbumSchema">PhotoAlbumSchema</a></span></li></ul>
+  </nav>
+</header>
+
+
+<main class="layout-main ">
+  <div class="container">
+    <p class="page-kind"></p>
+    <h1 class="page-title"></h1>
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section class="readme">
+        <article><h1>Ligerbots Web Site</h1>
+<p>This is a NodeJS web site using Express, EJS and MongoDB.</p>
+<h2>Installation</h2>
+<p>To develop with this you must have:</p>
+<ul>
+<li>xcode command line utils</li>
+<li>mongodb</li>
+<li>nodejs + npm</li>
+<li>yarn</li>
+</ul>
+<p>install xcode command line utils:</p>
+<pre class="prettyprint source"><code>xcode-select --install
+</code></pre>
+<p>install mongodb on mac osx:</p>
+<pre class="prettyprint source"><code>brew tap mongodb/brew
+brew update
+brew install mongodb-community@6.0
+</code></pre>
+<p>run mongodb service:</p>
+<pre class="prettyprint source"><code>brew services start mongodb-community@6.0
+</code></pre>
+<p>(to stop mongodb, which you shouldn't have to, but w/e... <code>brew services stop mongodb-community@6.0</code>)</p>
+<p>to test mongodb:</p>
+<pre class="prettyprint source"><code>mongod --version
+</code></pre>
+<p>which should output:</p>
+<pre class="prettyprint source"><code>db version v6.0.6
+Build Info: {
+    &quot;version&quot;: &quot;6.0.6&quot;,
+    &quot;gitVersion&quot;: &quot;26b4851a412cc8b9b4a18cdb6cd0f9f642e06aa7&quot;,
+    &quot;modules&quot;: [],
+    &quot;allocator&quot;: &quot;system&quot;,
+    &quot;environment&quot;: {
+        &quot;distarch&quot;: &quot;x86_64&quot;,
+        &quot;target_arch&quot;: &quot;x86_64&quot;
+    }
+}
+</code></pre>
+<p>to install node + npm, using brew:</p>
+<pre class="prettyprint source"><code>brew install node
+</code></pre>
+<p>to install yarn, using npm:</p>
+<pre class="prettyprint source"><code>npm install -g yarn 
+</code></pre>
+<p>to install node dependencies:</p>
+<pre class="prettyprint source"><code>yarn
+</code></pre>
+<h2>Running</h2>
+<p>to run web server:</p>
+<pre class="prettyprint source"><code>npm start
+</code></pre>
+<p>to quit web server:</p>
+<pre class="prettyprint source"><code>ctrl-c
+</code></pre>
+<p>and finally, once the server is running, open browser to http://localhost:3000</p>
+<h2>Design Notes</h2>
+<h3>Resources</h3>
+<ul>
+<li>Article</li>
+<li>Photo</li>
+<li>PhotoAlbum</li>
+<li>User</li>
+</ul>
+<p>This web service follows the Model-View-Controller pattern using:</p>
+<ul>
+<li>Mongoose (ORM for Mongodb) for Models</li>
+<li>EJS/HTML/Bootstrap for Views</li>
+<li>NodeJS/Express as its Controller.</li>
+</ul>
+<p>For more about MVC (Model-View-Controller) see https://developer.mozilla.org/en-US/docs/Glossary/MVC</p>
+<p>Users create content pages using Markdown. (See below.)</p>
+<h2>Resources</h2>
+<ul>
+<li>NodeJS: https://nodejs.org/dist/latest-v18.x/docs/api/</li>
+<li>MongoDB: https://www.mongodb.com/</li>
+<li>Express: https://expressjs.com/</li>
+<li>EJS: https://ejs.co/</li>
+<li>Markdown: https://www.markdownguide.org/</li>
+<li>Marked (markdown parser for nodejs): https://marked.js.org/</li>
+</ul>
+<h2>DOCS</h2>
+<ul>
+<li><a href="./docs/API.md">API Documentation</a></li>
+<li><a href="./docs/DataModel.md">Data Model Doctumentation</a></li>
+<li><a href="./docs/TODOS.md">Todos</a></li>
+</ul></article>
+    </section>
+
+
+
+
+
+
+  </div>
+</main>
+
+<footer class="layout-footer">
+  <div class="container">
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sat Sep 16 2023 16:30:31 GMT-0400 (Eastern Daylight Time)
+  </div>
+</footer>
+
+
+
+<script src="scripts/prism.dev.js"></script>
+</body>
+</html>

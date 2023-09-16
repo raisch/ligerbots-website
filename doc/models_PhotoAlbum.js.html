@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Ligerbots Website NG: models/PhotoAlbum.js</title>
+    
+      <link type="text/css" rel="stylesheet" href="styles/vendor/prism-tomorrow-night.css">
+    
+    <link type="text/css" rel="stylesheet" href="styles/styles.css">
+    
+</head>
+<body>
+
+<header class="layout-header">
+  
+  <h1>
+    <a href="./index.html">
+      Ligerbots Website NG
+    </a>
+  </h1>
+  <nav class="layout-nav">
+    <ul><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-PhotoAlbum%2520model.html">PhotoAlbum model</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-PhotoAlbum%252520model.html#~PhotoAlbumSchema">PhotoAlbumSchema</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-app.html">app</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-models_User.html">models/User</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-models_User.html#~UserSchema">UserSchema</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-models_article.html">models/article</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-models_photo.html">models/photo</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_albums.html">routes/albums</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_articles.html">routes/articles</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_events.html">routes/events</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_index.html">routes/index</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_main.html">routes/main</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_photos.html">routes/photos</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-routes_users.html">routes/users</a></span></li></ul><ul><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="global.html#PhotoAlbumModel">PhotoAlbumModel</a></span></li><li class="nav-item"><span class="nav-item-type type-typedef" title="typedef">T</span><span class="nav-item-name is-typedef"><a href="global.html#PhotoAlbumSchema">PhotoAlbumSchema</a></span></li></ul>
+  </nav>
+</header>
+
+
+<main class="layout-main  layout-content--source">
+  <div class="container">
+    <p class="page-kind">source</p>
+    <h1 class="page-title">models/PhotoAlbum.js</h1>
+    
+
+
+
+    
+
+<section>
+    <article>
+        <pre id="source" class="source-page line-numbers"><code class="language-js">/**
+ * @module PhotoAlbum model
+ */
+
+const { mongoose } = require('../lib/utils')
+
+const { PhotoSchema } = require('./Photo')
+
+/**
+ * Schemas and Models for Photo Albums
+ *
+ * @type {PhotoAlbumSchema}
+ * @property {Boolean} active - if true, this albumn is active
+ * @property {String} year - year of this album
+ * @property {Date} createdAt - date album was created
+ * @property {Date} updatedAt - date album was last updated
+ * @property {Photo[]} photos - array of photos in this album
+ */
+const PhotoAlbumSchema = new mongoose.Schema(
+  {
+    active: {
+      type: Boolean,
+      default: true,
+      required: true
+    },
+    year: {
+      type: String,
+      validate: {
+        validator: v => /^\d{4}$/.test(v),
+        message: 'Year must be a 4 digit number'
+      },
+      required: true
+    },
+    event_name: {
+      type: String,
+      required: true
+    },
+    event_date: {
+      type: Date
+    },
+    photos: [PhotoSchema],
+    createdBy: {
+      type: String,
+      default: 'unknown'
+    },
+    updatedBy: {
+      type: String,
+      default: 'unknown'
+    }
+  },
+  {
+    timestamps: true
+  }
+)
+
+PhotoAlbumSchema.statics.findByYear = function (year) {
+  return this.find({ year })
+}
+
+module.exports = {
+  PhotoAlbum: mongoose.model('PhotoAlbum', PhotoAlbumSchema),
+  PhotoAlbumSchema
+}
+
+/**
+ * PhotoAlbum Schema
+ * @typedef {Object} PhotoAlbumSchema
+ */
+
+/**
+ * PhotoAlbum model
+ * @typedef {Object} PhotoAlbumModel
+ */
+</code></pre>
+    </article>
+</section>
+
+
+
+
+  </div>
+</main>
+
+<footer class="layout-footer">
+  <div class="container">
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sat Sep 16 2023 16:30:31 GMT-0400 (Eastern Daylight Time)
+  </div>
+</footer>
+
+
+
+<script src="scripts/prism.dev.js"></script>
+</body>
+</html>

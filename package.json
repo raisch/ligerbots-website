@@ -6,8 +6,8 @@
   "scripts": {
     "start": "DEBUG=* nodemon ./app.js",
     "prime_db": "./bin/prime_db",
-    "docs": "jsdoc ./app.js ./etc ./lib ./models ./routes",
-    "docs:show": "npm run docs && open ./out/index.html"
+    "docs": "jsdoc -c ./.jsdoc.conf.json ",
+    "docs:show": "yarn run docs && open ./doc/index.html"
   },
   "keywords": [
     "javascript",
@@ -23,6 +23,7 @@
     "dompurify": "^3.0.4",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "git": "^0.1.5",
     "jsdom": "^22.1.0",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21",
@@ -30,7 +31,8 @@
     "method-override": "^3.0.0",
     "mongoose": "^7.3.1",
     "morgan": "^1.10.0",
-    "slugify": "^1.6.6"
+    "slugify": "^1.6.6",
+    "tidy-jsdoc-enhanced": "https://github.com/rob-raisch-simplisafe/tidy-jsdoc-enhanced.git"
   },
   "devDependencies": {
     "eslint": "^8.42.0",

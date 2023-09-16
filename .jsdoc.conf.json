@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "title": "Ligerbots Website NG"
+  },
+  "opts": {
+    "encoding": "utf8",
+    "destination": "./doc/",
+    "readme": "README.md",
+    "recurse": true,
+    "template": "./node_modules/tidy-jsdoc-enhanced"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "source": {
+    "include": [
+      "./app.js",
+      "./models",
+      "./routes"
+    ],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "node_modules"
+  },
+  "sourceType": "module"
+}
