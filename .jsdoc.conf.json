@@ -6,8 +6,7 @@
     "encoding": "utf8",
     "destination": "./doc/",
     "readme": "README.md",
-    "recurse": true,
-    "template": "./node_modules/tidy-jsdoc-enhanced"
+    "recurse": true
   },
   "plugins": [
     "plugins/markdown"
