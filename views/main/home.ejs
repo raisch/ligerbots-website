@@ -6,12 +6,20 @@
     <title>Blog</title>
 </head>
 
+<head>
+  <%- include('../partials/_meta') %>
+    <title>Blog</title>
+</head>
+
 <body>
-  <!-- HOME -->
   <%- include('../partials/_header') %>
-
-
-    <%- include('../partials/_footer') %>
+    <div class="body-container">
+      <%-include('.. /partials/_sideBarLeft')%>
+        <button id="toggleSidebars">Toggle Sidebar</button>
+        <%-include('.. /partials/_mainBody')%>
+          <%-include('.. /partials/_sideBarRight')%>
+    </div>
+    <%-include('.. /partials/_footer')%>
 </body>
 
 </html>

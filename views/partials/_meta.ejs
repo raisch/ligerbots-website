@@ -1,17 +1,44 @@
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/stylesheets/newligerbots.css">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<link rel="stylesheet" href="/stylesheets/newligerbots.css" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<script>
   function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
+    var x = document.getElementById('myTopnav')
+    if (x.className === 'topnav') {
+      x.className += ' responsive'
     } else {
-      x.className = "topnav";
+      x.className = 'topnav'
     }
   }
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('toggleSidebars')
+    const sidebars = document.querySelectorAll('.sidebar-left, .sidebar-right')
 
- 
+    toggleButton.addEventListener('click', function () {
+      sidebars.forEach(sidebar => {
+        sidebar.classList.toggle('show-sidebar')
+      })
+    })
+
+    // Add logic to show/hide the button based on screen size
+    function toggleButtonVisibility() {
+      const screenWidth = window.innerWidth
+      if (screenWidth <= 874) {
+        toggleButton.style.display = 'block'
+      } else {
+        toggleButton.style.display = 'none'
+      }
+    }
+
+    // Call the function initially and on window resize
+    toggleButtonVisibility()
+    window.addEventListener('resize', toggleButtonVisibility)
+  })
+</script>
