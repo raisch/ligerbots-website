@@ -9,8 +9,8 @@
  */
 
 // preferred order of requires
-//   node modules, 
-//   external modules, 
+//   node modules,
+//   external modules,
 //   our own modules
 //
 // then define constants and variables
