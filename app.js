@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * This is the main entry point for the web server.
  *
@@ -17,15 +18,18 @@
 const express = require('express')
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
+const ShortUniqueId = require('short-unique-id')
 
-const { _, mongoose } = require('./lib/utils')
+const { _, croak, croakFactory, dbConnect, stringify } = require('./lib/utils')
 const routes = require('./routes')
 
-const { API_VERSION, SERVICE_PORT, MONGODB_URI } = require('./etc/constants')
+const { API_VERSION, SERVICE_PORT } = require('./etc/constants')
 
 const PORT = process.env.PORT || SERVICE_PORT
 
 const app = express()
+
+const uid = new ShortUniqueId({ length: 5 })
 
 console.log('starting up...')
 
@@ -34,12 +38,27 @@ app.use(express.urlencoded({ extended: false }))
 app.use(methodOverride('_method'))
 app.use(bodyParser.json())
 
-// add routers
+// request/response logging middleware
+app.use((req, res, next) => {
+  const id = uid.rnd()
+  const { method, url } = req
+  console.log(`${id} <<< ${method} ${url} ${_.get(req, 'headers.host', 'UNKNOWN')}`)
+  res.on('finish', () => {
+    console.log(`${id} >>> ${res.statusCode} ${res.statusMessage}  [${res._contentLength.toLocaleString()} octets] ${method} ${url}`)
+  })
+  next()
+})
+
+// add routes
+console.log('adding main routes')
+app.use(routes.main)
+
 _.keys(routes).forEach(key => {
-  console.log(`adding routes for ${key}`)
-  if (key === 'main') {
-    app.use(routes[key])
-  } else {
+  if (key !== 'main') {
+    console.log(`adding templated routes for ${key}`)
+    app.use(`/${key}`, routes[key])
+
+    console.log(`adding api routes for ${key}`)
     app.use(`/api/v${API_VERSION}/${key}`, routes[key])
   }
 })
@@ -50,26 +69,12 @@ app.use(express.static('public'))
 // start listening for incoming requests
 app.listen(PORT, err => {
   if (err) {
-    console.log(`failed to start service: ${err}`)
-    process.exit(-1)
+    croak(`failed to start service: ${err}`)
   }
 
   console.log('connecting to mongo...')
-
-  // connect to backend database
-  mongoose
-    .connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-      // useCreateIndex: true
-    })
-    .catch(err => {
-      console.error(`failed to connect to mongoose: ${err}`)
-      process.exit(-1)
-    })
+  dbConnect()
+    .catch(croakFactory('failed to connect to mongoose'))
     .then(() => console.log('...connected to mongo via mongoose...'))
-
-    .then(() => {
-      console.log(`...listening for requests on port ${PORT}`)
-    })
+    .then(() => console.log(`...listening for requests on port ${PORT}`))
 })

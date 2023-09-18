@@ -20,6 +20,16 @@ const dompurify = createDomPurify(new JSDOM().window)
 }
 */
 
+/** @typedef {String[]} ArticleKind */
+
+/**
+ * Description placeholder
+ *
+ * @typedef {MongooseSchema} ArticleSchema
+ * @property {String} title
+ * @property {String} [description]
+ * @property {ArticleKind} kind
+ */
 const ArticleSchema = new mongoose.Schema(
   {
     title: {

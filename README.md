@@ -81,6 +81,9 @@ and finally, once the server is running, open browser to http://localhost:3000
 
 ## Design Notes
 
+### Routes
+- http://localhost:3000/api/v1/albums - GET albums
+
 ### Resources
 - Article
 - Photo
@@ -105,6 +108,6 @@ Users create content pages using Markdown. (See below.)
 - Marked (markdown parser for nodejs): https://marked.js.org/
 
 ## DOCS
-- [API Documentation](./docs/API.md)
-- [Data Model Doctumentation](./docs/DataModel.md)
-- [Todos](./docs/TODOS.md)
+- [API Documentation](../markdown/API.md)
+- [Data Model Doctumentation](../markdown/DataModel.md)
+- [Todos](../markdown/TODOS.md)

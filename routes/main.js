@@ -3,18 +3,16 @@
 
 const express = require('express')
 
-const { Article } = require('../models/Article')
-
 const router = express.Router()
 
 // HOMEPAGE
 router.get('/', async (req, res) => {
-  const articles = await Article.find().sort({ createdAt: 'desc' })
-  res.render('main/home', { articles })
+  res.render('main/home')
 })
 
 // JOIN PAGE
 router.get('/join', (req, res) => {
+  console.log('main route for /join')
   console.log('...rendering /join')
   res.render('main/join')
 })

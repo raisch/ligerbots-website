@@ -3,7 +3,7 @@
 
 module.exports = {
   albums: require('./albums'),
-  articles: require('./articles'),
+  // articles: require('./articles'),
   // events: require('./events'),
   main: require('./main'),
   photos: require('./photos'),

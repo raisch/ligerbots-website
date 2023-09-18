@@ -16,8 +16,15 @@ returns a list of years
 ]
 ```
 
-### GET /api/v1/albums/:year
+### GET /api/v1/albums/:year/events
 returns a list of events for the given year
+
+### GET /api/v1/albums/:year/events/:event_id
+returns a list of photos for an event
+
+### POST /albums => create a new album
+### PUT /albums/:album_id => update an existing album
+###DELETE /albums/:album_id => delete an existing album
 
 ### Events
 

@@ -9,7 +9,7 @@ DELETE /photos/:photo_id
 
 const _ = require('lodash')
 const express = require('express')
-const { Photo } = require('./../models/Photo')
+const { Photo } = require('../models/Photo')
 const { PhotoAlbum } = require('./../models/PhotoAlbum')
 const router = express.Router()
 
@@ -49,15 +49,15 @@ router.get('/:year', async (req, res) => {
   })
 })
 
-router.get('/:year/:event_name', async (req, res) => {
-  // route: /photos/2022/eventNme
-  const { year, event_name } = req.params
-  const result = await PhotoAlbum.findOne({ year, event_name })
-  console.log(JSON.stringify({ result }, null, 2))
+router.get('/:year/:event_slug', async (req, res) => {
+  // route: /photos/2022/the-big-event
+  const { year, event_slug } = req.params
+  const result = await PhotoAlbum.findOne({ year, event_slug })
   res.render('albums/photo_page', {
     photos: result.photos,
     year,
-    event_name
+    event_name: result.event_name,
+    event_slug
   })
 })
 
