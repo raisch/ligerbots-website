@@ -179,17 +179,6 @@ body {
   justify-content: space-between;
 }
 
-#toggleSidebars {
-  position: fixed;
-  top: 20px; 
-  left: 20px; 
-  z-index: 1000; 
-}
-
-
-.show-sidebar {
-  display: block;
-}
 
 .sidebar-left{
   background-color: #f7f7f7;
@@ -201,7 +190,7 @@ body {
 
 .sidebar-left-container{
   margin-top: 15px;
-  text-align: left;
+  text-align: center;
   width: 85%;
 }
 
@@ -231,13 +220,15 @@ body {
 @media screen and (max-width: 874px) {
   .sidebar-left{
     display: none; 
-    position: fixed;
-  }
-  .sidebar-right {
-      display: none; 
-      position: fixed;
   }
 
+  .sidebar-right{
+    display: none !important; 
+  }
+
+  .sidebar-right-container{
+    display: none;
+  }
 
 
   /* Adjust the main content to take up the whole screen */
@@ -257,7 +248,7 @@ body {
 
 .sidebar-right-container{
   margin-top: 15px;
-  text-align: left;
+  text-align: center;
   width: 85%;
   height: auto;
 }
@@ -396,6 +387,7 @@ body {
 
 }
 
+.error-body{
+  margin: 5%;
 
-
-
+}
