@@ -66,6 +66,10 @@ _.keys(routes).forEach(key => {
 // allow service of static assets (under './public')
 app.use(express.static('public'))
 
+app.get('*', async (req, res) => {
+  res.status(404).render('main/error')
+})
+
 // start listening for incoming requests
 app.listen(PORT, err => {
   if (err) {
