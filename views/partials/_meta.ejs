@@ -14,29 +14,3 @@
     }
   }
 </script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const toggleButton = document.getElementById('toggleSidebars')
-    const sidebars = document.querySelectorAll('.sidebar-left, .sidebar-right')
-
-    toggleButton.addEventListener('click', function() {
-      sidebars.forEach(sidebar => {
-        sidebar.classList.toggle('show-sidebar')
-      })
-    })
-
-    // Add logic to show/hide the button based on screen size
-    function toggleButtonVisibility() {
-      const screenWidth = window.innerWidth
-      if (screenWidth <= 874) {
-        toggleButton.style.display = 'block'
-      } else {
-        toggleButton.style.display = 'none'
-      }
-    }
-
-    // Call the function initially and on window resize
-    toggleButtonVisibility()
-    window.addEventListener('resize', toggleButtonVisibility)
-  })
-</script>

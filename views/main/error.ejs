@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <%- include('../partials/_meta') %>
-  <title>Error</title>
-</head>
-<body>
-ERROR PAGE
-</body>
+  <head>
+    <%- include('../partials/_meta') %>
+  </head>
+  <body>
+    <%- include('../partials/_header') %>
+    <div class="body-container">
+      <%- include('../partials/_sideBarLeft')%> <%-
+      include('../partials/_errorBody')%> <%-
+      include('../partials/_sideBarRight')%>
+    </div>
+    <%- include('../partials/_footer')%>
+  </body>
 </html>
