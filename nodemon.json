@@ -3,8 +3,9 @@
   "verbose": true,
   "watch": [
     "./app.js",
-    "./public",
+    "./lib",
     "./models",
+    "./public",
     "./routes",
     "./views"
   ]
