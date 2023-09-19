@@ -1,20 +1,19 @@
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, no-unused-vars */
 /** @module */
+
+const { _, assert, stringify } = require('../lib/utils')
 
 const express = require('express')
 
 const router = express.Router()
 
-// HOMEPAGE
-router.get('/', async (req, res) => {
+router.get('/', async (res, req) => {
   res.render('main/home')
 })
 
-// JOIN PAGE
-router.get('/join', (req, res) => {
-  console.log('main route for /join')
-  console.log('...rendering /join')
-  res.render('main/join')
+router.get('/:page', async (req, res) => {
+  const page = req.params.page
+  res.renderPage(page, 'PAGE TITLE')
 })
 
 module.exports = router

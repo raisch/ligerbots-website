@@ -29,6 +29,16 @@ const PORT = process.env.PORT || SERVICE_PORT
 
 const app = express()
 
+/**
+ * Extend router res with a new templated renderPage function.
+ */
+app.response.renderPage = function (page, title, tmpl = 'template') {
+  return this.render(tmpl, {
+    title: title || '',
+    page: page || 'example'
+  })
+}
+
 const uid = new ShortUniqueId({ length: 5 })
 
 console.log('starting up...')

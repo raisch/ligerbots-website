@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/_meta') %>
+  <title><%- title %></title>
+</head>
+
+<body>
+  <%- include('partials/_header') %>
+  <div class="body-container">
+    <%- include('partials/_sideBarLeft') %>
+    <div class="main-body">
+      <%- include(`pages/${page}`) %>
+    </div>
+    <%- include('partials/_sideBarRight') %>
+  </div>
+  <%- include('partials/_footer')%>
+</body>
+
+</html>
