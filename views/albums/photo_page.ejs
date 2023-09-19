@@ -3,34 +3,34 @@
 
 <head>
   <%- include('../partials/_meta') %>
-    <title>
-      Photos/<%= year %>/<%= event_name %>
-    </title>
+  <title>
+    Photos / <%= year %> / <%= event_name %>
+  </title>
 </head>
 
 <body>
   <h2>
-    Photos/<%= year %>/<%= event_name %>
+    Photos / <%= year %> / <%= event_name %>
   </h2>
 
   <div class="container">
 
-      <% photos.forEach(photo=> { %>
-        <figure>
-          <% if (photo.placement==='above' ) { %>
-            <figcaption>
-              <%= photo.caption %>
-            </figcaption>
-            <% } %>
-              <img src="<%= photo.location_uri %>" alt="epic photo">
-              <% if (photo.placement==='below' ) { %>
-                <figcaption>
-                  <%= photo.caption %>
-                </figcaption>
-                <% } %>
-        </figure>
-        <% }) %>
-    
+    <% photos.forEach(photo=> { %>
+    <figure>
+      <% if (photo.placement==='above' ) { %>
+      <figcaption>
+        <%= photo.caption %>
+      </figcaption>
+      <% } %>
+      <img src="<%= photo.location_uri %>" alt="epic photo">
+      <% if (photo.placement==='below' ) { %>
+      <figcaption>
+        <%= photo.caption %>
+      </figcaption>
+      <% } %>
+    </figure>
+    <% }) %>
+
   </div>
 </body>
 
