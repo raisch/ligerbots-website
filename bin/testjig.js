@@ -21,6 +21,6 @@ const run = async (func) => {
 }
 
 run(async () => {
-  const user = await User.findBySlug('john-user')
+  const user = await User.findBySlug('raisch-rob')
   console.log(stringify(user, null, 2))
 })
