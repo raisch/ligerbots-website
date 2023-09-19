@@ -30,7 +30,13 @@ const PORT = process.env.PORT || SERVICE_PORT
 const app = express()
 
 /**
- * Extend router res with a new templated renderPage function.
+ * Extend router response arg with a new templated renderPage function.
+ *
+ * @example
+ * router.get('/path/:page_name', async (req, res) => {
+ *    const page = req.param.page_name
+ *    res.renderPage(page, `This is the ${page} page.`)
+ * })
  */
 app.response.renderPage = function (page, title, tmpl = 'template') {
   return this.render(tmpl, {
