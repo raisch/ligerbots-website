@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, no-unused-vars */
 /** @module */
 
 const debug = require('debug')('lib/albums')
@@ -60,6 +60,7 @@ DELETE /albums/:album_id => delete an existing album
  */
 router.get('/', async (req, res) => {
   const projection = req.query?.filter ? req.query.filter.split(',') : ['year']
+
   const recs = await PhotoAlbum.find({}, projection) // returns [ { _id: '', year: '2023' }, ... ]
 
   debug('recs in /albums: %0', recs)
@@ -107,8 +108,8 @@ router.get('/:year/events', async (req, res) => {
     fmt: e => {
       // formatting helper function
       return {
-        anchor: `/photos/${year}/${e.event_slug}`,
-        label: `${new Date(e.event_date).toDateString()}: ${e.event_name}`
+        anchor: `/photos/${e.event.slug}`,
+        label: `${new Date(e.event.date).toDateString()}: ${e.event.name}`
       }
     }
   })
