@@ -74,6 +74,6 @@ const PhotoSchema = new mongoose.Schema(
 module.exports = {
   /** @type {MongooseModel} */
   Photo: mongoose.model('Photo', PhotoSchema),
-  /** @type {Photo} */
+  /** @type {MongooseSchema} */
   PhotoSchema
 }

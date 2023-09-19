@@ -4,12 +4,13 @@
 
 const { _, mongoose, slugify } = require('../lib/utils')
 
+/** @typedef {UserKind[]} UserKindList */
+/** @typedef {('student'|'coach'|'mentor'|'parent'|'other')} UserKind */
+
 /**
- * @type {('student'|'coach'|'mentor'|'parent'|'other')}
- *
- * @enum {String}
+ * @type {UserKindList}
  */
-const UserKind = ['student', 'coach', 'mentor', 'parent', 'other']
+const UserKindList = ['student', 'coach', 'mentor', 'parent', 'other']
 
 /**
  * @typedef {Object} User
@@ -60,8 +61,8 @@ const UserSchema = new mongoose.Schema(
     kind: {
       type: String,
       enum: {
-        values: UserKind,
-        message: `must be one of ${JSON.stringify(UserKind)}`
+        values: UserKindList,
+        message: `must be one of ${JSON.stringify(UserKindList)}`
       },
       required: true
     },
@@ -88,17 +89,13 @@ const UserSchema = new mongoose.Schema(
 )
 
 UserSchema.pre('validate', function (next) {
-  if (this.firstName && this.lastName) {
-    this.slug =
-      this?.slug ||
-      slugify(this.Lastname + this.firstName, {
+  this.slug = this?.slug ||
+      slugify(`${this.lastName}-${this.firstName}`, {
         lower: true,
         strict: true
       })
-  }
-
   if (this.kind === 'student' && !_.isHighSchoolGrade(this)) {
-    next(new Error('not a valid student'))
+    next(new Error('student must be in grades 9-12'))
     return
   }
 
@@ -137,12 +134,10 @@ _.merge(UserSchema.statics, {
 })
 
 module.exports = {
-  /**
-   * @type {MongooseModel}
-   */
+  /** @type {MongooseModel} */
   User: mongoose.model('User', UserSchema),
-  /**
-   * @type {UserSchema}
-   */
-  UserSchema
+  /** @type {MongooseSchema} */
+  UserSchema,
+  /** @type {UserKindList} */
+  UserKindList
 }
