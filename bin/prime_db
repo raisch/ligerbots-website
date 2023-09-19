@@ -1,18 +1,31 @@
 #!/usr/local/bin/node
+/* eslint-disable no-unused-vars */
 
 // Prime the db with some dummy photo data
 const { mongoose, dbConnect, stringify } = require('../lib/utils')
 
+const { Article } = require('../models/Article')
 const { PhotoAlbum } = require('../models/PhotoAlbum')
-
 const { User } = require('../models/User')
+
+const articlesData = [{
+  title: 'This is an article.',
+  description: 'This is a description of the article.',
+  date: '2023-01-01',
+  kind: 'blogpost',
+  markdown: '# Hello World! \n This is the content of my first blog post.'
+}]
 
 const photoAlbumsData = [
   {
     active: true,
     year: 2022,
-    event_name: 'The Big Event',
-    event_date: '2022-01-01',
+    event: {
+      name: 'The Big Event',
+      date: '2022-01-01'
+    },
+    // event_name: 'The Big Event',
+    // event_date: '2022-01-01',
     photos: [
       {
         caption: 'WTF?',
@@ -24,8 +37,12 @@ const photoAlbumsData = [
   {
     active: true,
     year: 2022,
-    event_name: 'Another Big Event',
-    event_date: '2022-11-01',
+    event: {
+      name: 'Another Big Event',
+      date: '2022-11-01'
+    },
+    // event_name: 'Another Big Event',
+    // event_date: '2022-11-01',
     photos: [
       {
         caption: 'With Pringles',
@@ -42,8 +59,12 @@ const photoAlbumsData = [
   {
     active: true,
     year: 2023,
-    event_name: 'Still Another Big Event',
-    event_date: '2023-01-01',
+    event: {
+      name: 'Still Another Big Event',
+      date: '2023-01-01'
+    },
+    // event_name: 'Still Another Big Event',
+    // event_date: '2023-01-01',
     photos: [
       {
         caption: 'With Pringles',
@@ -78,13 +99,57 @@ const usersData = [{
   updatedBy: 'unknown'
 }]
 
+// === MAIN ===
+dbConnect()
+  .catch(err => dieDieDie(`failed to connect to mongoose: ${err}`))
+  .then(dropArticles)
+  .then(primeArticles)
+  .then(dropPhotoAlbums)
+  .then(primePhotoAlbums)
+  .then(dropUsers)
+  .then(primeUsers)
+  .catch(dieDieDie)
+  .then(waitToComplete)
+
+// === HELPERS ===
+
 function dieDieDie (msg) {
   console.error(msg)
   process.exit(-1)
 }
 
+// === ARTICLES ===
+async function dropArticles () {
+  console.log('dropping Articles collection...')
+  return mongoose.connection.dropCollection('articles')
+}
+
+function saveArticle (article) {
+  return new Promise((resolve, reject) => {
+    try {
+      const newArticle = new Article(article)
+      newArticle.save()
+      console.log('saved article:', newArticle)
+      resolve(newArticle)
+    } catch (err) {
+      console.error('Error saving article', err)
+      reject(err)
+    }
+  })
+}
+
+function primeArticles () {
+  console.log('priming Articles collection...')
+  const articles = []
+  articlesData.forEach(d => {
+    articles.push(saveArticle(d))
+  })
+  return Promise.all(articles)
+}
+
+// === PHOTOALBUMS ===
 async function dropPhotoAlbums () {
-  console.log('dropping photoalbums')
+  console.log('dropping PhotoAlbums collection...')
   try {
     mongoose.connection.dropCollection('photoalbums')
   } catch (err) {
@@ -92,8 +157,32 @@ async function dropPhotoAlbums () {
   }
 }
 
+function savePhotoAlbum (album) {
+  return new Promise((resolve, reject) => {
+    try {
+      const newPhotoAlbum = new PhotoAlbum(album)
+      newPhotoAlbum.save()
+      console.log('saved photo album:', newPhotoAlbum)
+      resolve(newPhotoAlbum)
+    } catch (err) {
+      console.error('Error saving photo album:', err)
+      reject(err)
+    }
+  })
+}
+
+async function primePhotoAlbums () {
+  console.log('priming PhotoAlbums collection...')
+  const albums = []
+  photoAlbumsData.forEach(d => {
+    albums.push(savePhotoAlbum(d))
+  })
+  return Promise.all(albums)
+}
+
+// === USERS ===
 async function dropUsers () {
-  console.log('dropping users table')
+  console.log('dropping Users collection...')
   try {
     mongoose.connection.dropCollection('users')
   } catch (err) {
@@ -101,43 +190,33 @@ async function dropUsers () {
   }
 }
 
-async function primePhotoAlbums () {
-  await dropPhotoAlbums()
-  photoAlbumsData.forEach(async d => {
-    console.log(`working on ${stringify(d)}`)
-    const rec = new PhotoAlbum(d)
-    await rec.save()
-    console.log(`saved album: ${rec}`)
+function saveUser (user) {
+  return new Promise((resolve, reject) => {
+    try {
+      const newUser = new User(user)
+      newUser.save()
+      console.log('saved user:', newUser)
+      resolve(newUser)
+    } catch (err) {
+      console.error('Error saving user:', err)
+      reject(err)
+    }
   })
 }
 
 async function primeUsers () {
-  await dropUsers()
-  usersData.forEach(async d => {
-    console.log(`working on ${stringify(d)}`)
-    const rec = new User(d)
-    await rec.save()
-    console.log(`saved user: ${rec}`)
+  console.log('priming Users collection...')
+  const users = []
+  usersData.forEach(d => {
+    users.push(saveUser(d))
   })
+  return Promise.all(users)
 }
 
-dbConnect()
-  .catch(err => {
-    console.error(`failed to connect to mongoose: ${err}`)
-    process.exit(-1)
-  })
-  .then(async () => {
-    console.log('priming PhotoAlbums collection...')
-    await primePhotoAlbums().catch(err => dieDieDie(err))
-  })
-  .then(async () => {
-    console.log('priming Users collection...')
-    await primeUsers().catch(err => dieDieDie(err))
-  })
-  .then(async () => {
-    console.log('waiting to complete')
-    setTimeout(() => {
-      console.log('complete')
-      process.exit(0)
-    }, 5000)
-  })
+async function waitToComplete () {
+  console.log('waiting to complete')
+  setTimeout(() => {
+    console.log('complete')
+    process.exit(0)
+  }, 1000)
+}
