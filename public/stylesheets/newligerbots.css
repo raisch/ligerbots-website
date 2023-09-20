@@ -30,7 +30,6 @@ body {
 .header-logo-row {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   flex-grow: 1;
 }
 
@@ -41,12 +40,6 @@ body {
 .header-logo.large {
   flex: 2; 
   max-width: calc(60% - 10px); 
-  padding-left: 2px;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  margin-right: 20px;
-  width: auto;
-  height: auto;
 }
 
 .header-logo-small {
@@ -61,12 +54,16 @@ body {
 }
 
 @media screen and (max-width: 874px) {
+  .header-logo-row{
+    width: 100%;
+  }
   .header-logo.large {
-    max-width: calc(100% - 10px); /* Large logo takes full width on smaller screens */
+    max-width: calc(100% - 10px) !important; /* Large logo takes full width on smaller screens */
+    height: auto;
   }
  
-  .header-logo.small {
-      display: none;
+  .header-logo-small {
+    display: none;
   }
   
   .header-logo-row {
