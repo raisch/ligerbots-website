@@ -95,7 +95,7 @@ router.get('/', async (req, res) => {
  */
 router.get('/:year/events', async (req, res) => {
   const year = req.params.year
-  const events = await PhotoAlbum.find({ year }) // , ['event_name', 'event_date'])
+  const events = await PhotoAlbum.find({ year },'event') // , ['event_name', 'event_date'])
 
   if (_.isDev() && req.originalUrl.startsWith('/api/v1')) {
     res.send(events)

@@ -23,11 +23,20 @@ const { PhotoAlbum } = require('../models/PhotoAlbum')
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-  // if query.slug
-  // else if query.year
+  const year = (new Date).getFullYear()
+  res.redirect(301, `/event/${year}`)
+})
+
+router.get('/:year', async (req, res) => {
+  const year = req.params.year;
+  const events = await PhotoAlbum.find({ year }).exec()
+  res.render('events/list', {
+    events
+  })
 })
 
 router.get('/:event_id', async (req, res) => {
 })
+
 
 module.exports = router

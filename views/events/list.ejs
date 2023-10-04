@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/_meta') %>
+    <title>Blog</title>
+  </head>
+
+  <body>
+    <%- include('../partials/_header') %>
+    <div class="body-container">
+      <%- include('../partials/_sideBarLeft')%> 
+      
+      
+      <div class="Photo-template-container">
+        <div class="photo-template-text">PHOTOS</div>
+      
+        <hr />
+        <% 
+        const numCols = 4
+        const numRows = Math.trunc(events.length/numCols)+1 
+        %>
+        <table>
+          <% for(let row=0; row<numRows; row++){ %>
+            <tr>
+              <% for(let col=0; col<4; col++) {
+                  const index = row*numCols+col
+                  let evt = events[index]     
+              %> 
+                  <%
+                  if (evt) { 
+                      evt = evt.event
+                  %>
+                  <td style="border:2px solid blue">
+                    <figure class="photo-img">
+                      <img src="<%= evt.imageUrl %>"/>
+                      <figcaption><%= evt.date %>  <%= evt.name %></figcaption>
+                    </figure>
+                  </td>
+                  <% } %>
+              <% } %>
+            </tr>
+          <% } %>
+        </table>
+      </div>
+
+      
+      
+      <%-
+      include('../partials/_sideBarRight')%>
+    </div>
+    <%- include('../partials/_footer')%>
+  </body>
+</html>
+
+
+
+
+
+
+

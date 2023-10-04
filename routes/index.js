@@ -2,7 +2,7 @@
 /** @module */
 
 module.exports = {
-  albums: require('./albums'),
+ // albums: require('./albums'),
   // articles: require('./articles'),
   events: require('./events'),
   main: require('./main'),

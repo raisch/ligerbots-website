@@ -3,6 +3,7 @@
  * @module
  */
 
+const string = require('nodash/lib/string')
 const { _, mongoose, slugify } = require('../lib/utils')
 
 const { PhotoSchema } = require('./Photo')
@@ -73,6 +74,10 @@ const PhotoAlbumSchema = new mongoose.Schema(
     },
     event: {
       name: {
+        type: String,
+        required: true
+      },
+      imageUrl: {
         type: String,
         required: true
       },
