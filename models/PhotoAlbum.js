@@ -3,7 +3,6 @@
  * @module
  */
 
-
 const { _, mongoose, slugify } = require('../lib/utils')
 
 const { PhotoSchema } = require('./Photo')
