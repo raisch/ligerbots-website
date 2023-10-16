@@ -1,4 +1,4 @@
-#!/usr/local/bin/node
+#!/opt/homebrew/bin/node
 /* eslint-disable no-unused-vars */
 
 // Prime the db with some dummy photo data
