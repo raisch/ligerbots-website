@@ -110,7 +110,6 @@ a{
   padding: 14px 16px;
   background-color: inherit;
   font-family: inherit;
-  margin: 0;
 }
 
 .dropdown-content {
@@ -534,52 +533,29 @@ a{
   margin-bottom: 5px;
 }
 
-
-.Photo-template-container{  
-  margin: 3% !important;
+.photo-template-text{
+  font-size: 3vw;
+  text-align: center;
+}
+.Photo-template-container{
   width: 100%;
-  max-width: 100%;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 10px;
+}
+.album-img{
+  width: 70%;
+  aspect-ratio: 1/1;
+  border-radius: 10px;
+  margin: 0;
+}
+.photo-template-table{
+  width:100%;
+}
+
+.photo-template-table-cell{
+}
+
+.photo-template-table-row{
   height: auto;
 }
-
-.photo-template-text{
-  text-align: center;
-  font-size: 30px;
-  letter-spacing: 2px;
-
-}
-
-.photo-img img{
-  width: 100%; 
-  height: 100%;
-  border-radius: 5%;
-  aspect-ratio: 1/1;
-}
-
-.photo-img{
-  position: relative;
-}
-
-.photo-img figcaption{
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  transform: translate(-50%);
-  color: white;
-  width: 80%;
-  z-index: 1000;
-}
-
-.photo-img:after {
-  content:""; 
-  position: absolute; 
-  aspect-ratio: 1/1;
-  width: 100%;
-  height: 100%;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to bottom,rgba(255,255,255,0) 48%,rgba(2, 2, 2, 0.85) 100%);  
-  border-radius: 5%;
-}
-
