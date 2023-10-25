@@ -22,7 +22,7 @@
         %>
       <table class="photo-template-table">
         <% for(let row=0; row<numRows; row++){ %>
-        <tr class=".photo-template-table-row">
+        <tr class="photo-template-table-row">
           <% for(let col=0; col<4; col++) {
                   const index = row*numCols+col
                   let evt = events[index]     
@@ -32,7 +32,10 @@
                       evt = evt.event
                   %>
           <td class="photo-template-table-cell">
+            <div class="img-gradient">
             <img class="album-img" src="<%= evt.imageUrl %>"/>
+            <div class="table-img-text"><%= evt.name %> </div>
+            </div>
                   </td>
                   <% } %>
               <% } %>
