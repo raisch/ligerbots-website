@@ -35,6 +35,10 @@ const UserKindList = ['student', 'coach', 'mentor', 'parent', 'other']
  *    imageUrl: "http://...",
  *    kind: "student", // enum from Kind
  *    grade: 10,
+ *    phone: "853-345-3245",
+ *    email: "john@example.com",
+ *    address: "123 Main St",
+ *    school: "newton north",
  *    slug: "john-user", // auto-generated
  *    createdBy: "unknown",
  *    updatedBy: "unknown",
@@ -67,7 +71,25 @@ const UserSchema = new mongoose.Schema(
       required: true
     },
     grade: {
-      type: Number
+      type: Number,
+      required: true
+    },
+    phone: {
+      type: String,
+      validator: (v) => /^\d{3}-\d{3}-\d{4}$/.test(v)
+    },
+    email: {
+      type: String,
+      required: true
+    },
+    address: {
+      type: String,
+      validator: (v) => /(\d+)*(\s)*(\w+)*(\s)*(\w+)*(\s)*(\w+)/gm.test(v),
+      required: true
+    },
+    school: {
+      type: String,
+      required: true
     },
     slug: {
       type: String,
