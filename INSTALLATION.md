@@ -3,7 +3,7 @@
 - git
   - see https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
-- node/npm
+- node &amp; npm
   - see https://nodejs.org/en/download
 
 - yarn
