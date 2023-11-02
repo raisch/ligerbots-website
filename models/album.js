@@ -56,7 +56,7 @@ const ListOfPhotos = [PhotoSchema]
  *    updatedAt: ISODate("2023-09-18T15:33:52.030Z")
  * }
  */
-const PhotoAlbumSchema = new mongoose.Schema(
+const AlbumSchema = new mongoose.Schema(
   {
     active: {
       type: Boolean,
@@ -120,7 +120,7 @@ const PhotoAlbumSchema = new mongoose.Schema(
   }
 )
 
-_.merge(PhotoAlbumSchema.statics, {
+_.merge(AlbumSchema.statics, {
   /**
    * Find a photo albums by year.
    *
@@ -137,14 +137,14 @@ _.merge(PhotoAlbumSchema.statics, {
   findByEventName: event_name => this.find({ event: { name: event_name } })
 })
 
-PhotoAlbumSchema.pre('validate', function (next) {
+AlbumSchema.pre('validate', function (next) {
   this.event.slug = slugify(`${this.event.name}-${this.event.date}`, { lower: true, strict: true })
   next()
 })
 
 module.exports = {
   /** @type {MongooseModel} */
-  PhotoAlbum: mongoose.model('PhotoAlbum', PhotoAlbumSchema),
+  Album: mongoose.model('Album', AlbumSchema),
   /** @type {MongooseSchema} */
-  PhotoAlbumSchema
+  AlbumSchema
 }
