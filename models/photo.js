@@ -71,9 +71,17 @@ const PhotoSchema = new mongoose.Schema(
  * @typedef {Object} PhotoModel
  */
 
+/**
+ * List of Photos
+ *
+ * @typedef {Array.<PhotoSchema>} ListOfPhotos
+ */
+
 module.exports = {
   /** @type {MongooseModel} */
   Photo: mongoose.model('Photo', PhotoSchema),
   /** @type {MongooseSchema} */
-  PhotoSchema
+  PhotoSchema,
+  /** @type {ListOfPhotos} */
+  ListOfPhotos: [ PhotoSchema ]
 }

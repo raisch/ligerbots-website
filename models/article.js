@@ -8,9 +8,6 @@ const { JSDOM } = require('jsdom')
 
 const dompurify = createDomPurify(new JSDOM().window)
 
-/** @typedef {'blogpost'|'feature'|'faq'|'other'} ArticleKind */
-/** @typedef {ArticleKind[]} ArticleKindList */
-
 /** @type {ArticleKindList} */
 const ArticleKindList = ['blogpost', 'feature', 'faq', 'other']
 
@@ -117,3 +114,7 @@ module.exports = {
   /** @type {ArticleKindList} */
   ArticleKindList
 }
+
+/** @typedef {'blogpost'|'feature'|'faq'|'other'} ArticleKind */
+
+/** @typedef {ArticleKind[]} ArticleKindList */

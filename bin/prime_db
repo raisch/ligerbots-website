@@ -2,221 +2,228 @@
 /* eslint-disable no-unused-vars */
 
 // Prime the db with some dummy photo data
-const { mongoose, dbConnect, stringify } = require('../lib/utils')
+const {
+  _,
+  assert,
+  mongoose,
+  dbConnect,
+  dbDisconnect,
+  stringify
+} = require('../lib/utils')
 
-const { Article } = require('../models/Article')
-const { PhotoAlbum } = require('../models/PhotoAlbum')
-const { User } = require('../models/User')
+const { MONGODB_URI } = require('../etc/constants')
 
-const articlesData = [{
-  title: 'This is an article.',
-  description: 'This is a description of the article.',
-  date: '2023-01-01',
-  kind: 'blogpost',
-  markdown: '# Hello World! \n This is the content of my first blog post.'
-}]
+const mocks = require('../etc/mocks')
 
-const photoAlbumsData = [
-  {
-    active: true,
-    year: 2022,
-    event: {
-      name: 'The Big Event',
-      date: '2022-01-01'
-    },
-    // event_name: 'The Big Event',
-    // event_date: '2022-01-01',
-    photos: [
-      {
-        caption: 'WTF?',
-        location_uri:
-          'https://farm66.staticflickr.com/65535/53059598537_7d7e4b51e5_z.jpg'
-      }
-    ]
-  },
-  {
-    active: true,
-    year: 2022,
-    event: {
-      name: 'Another Big Event',
-      date: '2022-11-01'
-    },
-    // event_name: 'Another Big Event',
-    // event_date: '2022-11-01',
-    photos: [
-      {
-        caption: 'With Pringles',
-        location_uri:
-          'https://farm66.staticflickr.com/65535/53060663853_22d9597791_z.jpg'
-      },
-      {
-        caption: 'Blue Goo',
-        location_uri:
-          'https://farm66.staticflickr.com/65535/53060567875_c492264465_z.jpg'
-      }
-    ]
-  },
-  {
-    active: true,
-    year: 2023,
-    event: {
-      name: 'Still Another Big Event',
-      date: '2023-01-01'
-    },
-    // event_name: 'Still Another Big Event',
-    // event_date: '2023-01-01',
-    photos: [
-      {
-        caption: 'With Pringles',
-        location_uri:
-          'https://farm66.staticflickr.com/65535/53060663853_22d9597791_z.jpg'
-      },
-      {
-        caption: 'Blue Goo',
-        location_uri:
-          'https://farm66.staticflickr.com/65535/53060567875_c492264465_z.jpg'
-      }
-    ]
-  }
-]
+// process.on('unhandledRejection', (reason, p) => {
+//   console.error('Unhandled Rejection at:', p, 'reason:', reason)
+// })
 
-const usersData = [{
-  firstName: 'John',
-  lastName: 'User',
-  imageUrl: 'http://...',
-  kind: 'student',
-  grade: 10,
-  // slug: 'john-user', // auto-generated
-  createdBy: 'unknown',
-  updatedBy: 'unknown'
-}, {
-  firstName: 'Rob',
-  lastName: 'Raisch',
-  imageUrl: 'http://...',
-  kind: 'mentor',
-  // slug: 'john-user', // auto-generated
-  createdBy: 'unknown',
-  updatedBy: 'unknown'
-}]
+function dropTable (mock) {
+  assert(_.isNonEmptyString(mock.name), 'mock must have a name')
+  return new Promise((resolve, reject) => {
+    try {
+      console.log(`dropping ${mock.name} collection...`)
+      mongoose.connection.dropCollection(mock.name)
+    } catch (err) {
+      reject(new Error(`failed to drop ${mock.name} collection: ${err}`))
+    }
+    resolve()
+  })
+}
+
+function saveRecord (mock, record) {
+  assert(_.isNonEmptyString(mock.name), 'mock must have a name')
+  return new Promise((resolve, reject) => {
+    try {
+      // eslint-disable-next-line new-cap
+      const newRecord = new mock.model(record)
+      newRecord
+        .save()
+        .catch(err =>
+          console.error(`failed to save ${newRecord} to ${mock.name}: ${err}`)
+        )
+      console.log(`saved ${stringify(record, null, 2)} to ${mock.name}`)
+      resolve(newRecord)
+    } catch (err) {
+      console.error(`Failed to save ${mock.name}: ${err}`)
+      reject(err)
+    }
+  })
+}
+
+async function primeTable (mock) {
+  const { name, data } = mock
+  console.log(`priming ${name} collection...`)
+  const promises = []
+  data.forEach(d => {
+    promises.push(
+      saveRecord(mock, d).catch(err =>
+        console.error(`failed to save record to ${mock.name}: ${err}`)
+      )
+    )
+  })
+  promises.push(() => console.log(`finished priming ${mock.name}`))
+  return promises
+}
+
+async function completeTable (mock) {
+  console.log(`priming ${mock.name} is complete`)
+}
+
+const run = async () => {
+  console.log('connecting to db')
+  await mongoose
+    .connect(MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+      // reconnectTries: Number.MAX_VALUE,
+      // reconnectInterval: 5000,
+      // useFindAndModify: false
+      // useCreateIndex: true,
+    })
+    .catch(err => dieDieDie(`failed to connect to mongoose: ${err}`))
+
+  const promises = _.chain(mocks)
+    .keys()
+    .map(k => [
+      dropTable(mocks[k]),
+      primeTable(mocks[k]),
+      completeTable(mocks[k])
+    ])
+    .flatten()
+    .value()
+
+  await Promise.all(promises).catch(err => dieDieDie(err))
+
+  await mongoose.connection
+    .close()
+    .catch(err => dieDieDie(`failed to close db connection: ${err}`))
+
+  console.log('complete')
+}
+
+run()
 
 // === MAIN ===
-dbConnect()
-  .catch(err => dieDieDie(`failed to connect to mongoose: ${err}`))
-  .then(dropArticles)
-  .then(primeArticles)
-  .then(dropPhotoAlbums)
-  .then(primePhotoAlbums)
-  .then(dropUsers)
-  .then(primeUsers)
-  .catch(dieDieDie)
-  .then(waitToComplete)
+// dbConnect()
+//   .catch(err => dieDieDie(`failed to connect to mongoose: ${err}`))
+//   .then(dropArticles)
+//   .then(primeArticles)
+//   .then(dropAlbums)
+//   .then(primeAlbums)
+//   .then(dropUsers)
+//   .then(primeUsers)
+//   .catch(dieDieDie)
+//   .then(waitToComplete)
 
-// === HELPERS ===
+// // === HELPERS ===
 
 function dieDieDie (msg) {
   console.error(msg)
   process.exit(-1)
 }
 
-// === ARTICLES ===
-async function dropArticles () {
-  console.log('dropping Articles collection...')
-  return mongoose.connection.dropCollection('articles')
-}
+// // === ARTICLES ===
+// async function dropArticles () {
+//   console.log('dropping Articles collection...')
+//   return mongoose.connection.dropCollection('articles')
+// }
 
-function saveArticle (article) {
-  return new Promise((resolve, reject) => {
-    try {
-      const newArticle = new Article(article)
-      newArticle.save()
-      console.log('saved article:', newArticle)
-      resolve(newArticle)
-    } catch (err) {
-      console.error('Error saving article', err)
-      reject(err)
-    }
-  })
-}
+// function saveArticle (article) {
+//   return new Promise((resolve, reject) => {
+//     try {
+//       const newArticle = new Article(article)
+//       newArticle.save()
+//       console.log('saved article:', newArticle)
+//       resolve(newArticle)
+//     } catch (err) {
+//       console.error('Error saving article', err)
+//       reject(err)
+//     }
+//   })
+// }
 
-function primeArticles () {
-  console.log('priming Articles collection...')
-  const articles = []
-  articlesData.forEach(d => {
-    articles.push(saveArticle(d))
-  })
-  return Promise.all(articles)
-}
+// function primeArticles () {
+//   console.log('priming Articles collection...')
+//   const articles = []
+//   articlesData.forEach(d => {
+//     articles.push(saveArticle(d))
+//   })
+//   return Promise.all(articles)
+// }
 
-// === PHOTOALBUMS ===
-async function dropPhotoAlbums () {
-  console.log('dropping PhotoAlbums collection...')
-  try {
-    mongoose.connection.dropCollection('photoalbums')
-  } catch (err) {
-    /* purposefully ignored */
-  }
-}
+// // === ALBUMS ===
+// async function dropAlbums () {
+//   console.log('dropping Albums collection...')
+//   try {
+//     mongoose.connection.dropCollection('albums')
+//   } catch (err) {
+//     /* purposefully ignored */
+//   }
+// }
 
-function savePhotoAlbum (album) {
-  return new Promise((resolve, reject) => {
-    try {
-      const newPhotoAlbum = new PhotoAlbum(album)
-      newPhotoAlbum.save()
-      console.log('saved photo album:', newPhotoAlbum)
-      resolve(newPhotoAlbum)
-    } catch (err) {
-      console.error('Error saving photo album:', err)
-      reject(err)
-    }
-  })
-}
+// function saveAlbum (album) {
+//   return new Promise((resolve, reject) => {
+//     try {
+//       const newAlbum = new Album(album)
+//       newAlbum.save()
+//       console.log('saved photo album:', newAlbum)
+//       resolve(newAlbum)
+//     } catch (err) {
+//       console.error('Error saving album:', err)
+//       reject(err)
+//     }
+//   })
+// }
 
-async function primePhotoAlbums () {
-  console.log('priming PhotoAlbums collection...')
-  const albums = []
-  photoAlbumsData.forEach(d => {
-    albums.push(savePhotoAlbum(d))
-  })
-  return Promise.all(albums)
-}
+// async function primeAlbums () {
+//   console.log('priming Albums collection...')
+//   const albums = []
+//   albumsData.forEach(d => {
+//     albums.push(saveAlbum(d))
+//   })
+//   return Promise.all(albums)
+// }
 
-// === USERS ===
-async function dropUsers () {
-  console.log('dropping Users collection...')
-  try {
-    mongoose.connection.dropCollection('users')
-  } catch (err) {
-    /* purposefully ignored */
-  }
-}
+// // === USERS ===
+// async function dropUsers () {
+//   console.log('dropping Users collection...')
+//   try {
+//     mongoose.connection.dropCollection('users')
+//   } catch (err) {
+//     /* purposefully ignored */
+//   }
+// }
 
-function saveUser (user) {
-  return new Promise((resolve, reject) => {
-    try {
-      const newUser = new User(user)
-      newUser.save()
-      console.log('saved user:', newUser)
-      resolve(newUser)
-    } catch (err) {
-      console.error('Error saving user:', err)
-      reject(err)
-    }
-  })
-}
+// function saveUser (user) {
+//   return new Promise((resolve, reject) => {
+//     try {
+//       const newUser = new User(user)
+//       newUser.save()
+//       console.log('saved user:', newUser)
+//       resolve(newUser)
+//     } catch (err) {
+//       console.error('Error saving user:', err)
+//       reject(err)
+//     }
+//   })
+// }
 
-async function primeUsers () {
-  console.log('priming Users collection...')
-  const users = []
-  usersData.forEach(d => {
-    users.push(saveUser(d))
-  })
-  return Promise.all(users)
-}
+// async function primeUsers () {
+//   console.log('priming Users collection...')
+//   const users = []
+//   usersData.forEach(d => {
+//     users.push(saveUser(d))
+//   })
+//   return Promise.all(users)
+// }
 
-async function waitToComplete () {
-  console.log('waiting to complete')
-  setTimeout(() => {
-    console.log('complete')
-    process.exit(0)
-  }, 1000)
-}
+// async function waitToComplete () {
+//   console.log('waiting to complete')
+//   setTimeout(async () => {
+//     await dbDisconnect()
+//     console.log('complete')
+//     process.exit(0)
+//   }, 1000)
+// }
