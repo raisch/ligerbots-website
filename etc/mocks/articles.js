@@ -1,7 +1,7 @@
 const { Article } = require('../../models/Article')
 
 module.exports = {
-  name: 'Articles',
+  name: 'articles',
   model: Article,
   data: [
     {

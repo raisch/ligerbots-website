@@ -1,7 +1,7 @@
 const { Album } = require('../../models/Album')
 
 module.exports = {
-  name: 'Albums',
+  name: 'albums',
   model: Album,
   data: [
     {
