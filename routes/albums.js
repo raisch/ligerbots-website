@@ -6,7 +6,7 @@ const { _ } = require('../lib/utils')
 
 const express = require('express')
 
-const { PhotoAlbum } = require('../models/PhotoAlbum')
+const { Album } = require('../models/Album')
 
 /* Photo Album Record Example
   {
@@ -61,7 +61,7 @@ DELETE /albums/:album_id => delete an existing album
 router.get('/', async (req, res) => {
   const projection = req.query?.filter ? req.query.filter.split(',') : ['year']
 
-  const recs = await PhotoAlbum.find({}, projection) // returns [ { _id: '', year: '2023' }, ... ]
+  const recs = await Album.find({}, projection) // returns [ { _id: '', year: '2023' }, ... ]
 
   debug('recs in /albums: %0', recs)
 
@@ -95,7 +95,7 @@ router.get('/', async (req, res) => {
  */
 router.get('/:year/events', async (req, res) => {
   const year = req.params.year
-  const events = await PhotoAlbum.find({ year }) // , ['event_name', 'event_date'])
+  const events = await Album.find({ year }) // , ['event_name', 'event_date'])
 
   if (_.isDev() && req.originalUrl.startsWith('/api/v1')) {
     res.send(events)
@@ -132,7 +132,7 @@ router.get('/:year/events/:event_id/photos', async (req, res) => {
 
   const { year, event_id } = req.params
 
-  const event = await PhotoAlbum.findOne({ year, _id: event_id })
+  const event = await Album.findOne({ year, _id: event_id })
 
   if (!event) {
     return res.status(404).send('Event not found')

@@ -13,14 +13,14 @@ const express = require('express')
 const { _, stringify } = require('../lib/utils')
 
 const { Photo } = require('../models/Photo')
-const { PhotoAlbum } = require('./../models/PhotoAlbum')
+const { Album } = require('./../models/Album')
 const router = express.Router()
 
 router.post('/', async (req, res) => {})
 
 router.get('/', async (req, res) => {
   // route /api/albums
-  const recs = await PhotoAlbum.find({}, ['year']) // returns [ { _id: '', year: '2023' }, ... ]
+  const recs = await Album.find({}, ['year']) // returns [ { _id: '', year: '2023' }, ... ]
 
   const years = _.sortedUniq(
     _.map(recs, rec => rec.year) // [ '2023', '2022', ... ]
@@ -37,7 +37,7 @@ router.get('/', async (req, res) => {
 //   // route /photos/2022
 //   // /photos/2023
 //   const year = req.params.year
-//   const events = await PhotoAlbum.find({ year }, ['event_name', 'event_date'])
+//   const events = await Album.find({ year }, ['event_name', 'event_date'])
 //   res.render('albums/event_list', {
 //     events,
 //     year,
@@ -55,7 +55,7 @@ router.get('/', async (req, res) => {
 router.get('/:event_slug', async (req, res) => {
   // route: /photos/the-big-event
   const { event_slug } = req.params
-  const result = await PhotoAlbum.findOne({ 'event.slug': event_slug })
+  const result = await Album.findOne({ 'event.slug': event_slug })
   if (!result) {
     res.render('main/error')
     return
@@ -76,14 +76,14 @@ router.get('/:year/:event_name/edit', async (req, res) => {
   })
 })
 
-// create a new photoalbum record
+// create a new Album record
 router.post('/:year/:event_name/photo', async (req, res) => {
   const { year, event_name } = req.params
   const { caption, placement, location_uri } = req.body
 
   console.log(JSON.stringify({ params: req.params, body: req.body }))
 
-  const album = await PhotoAlbum.findOne({ year, event_name })
+  const album = await Album.findOne({ year, event_name })
 
   const photo = new Photo({
     caption,
@@ -96,7 +96,7 @@ router.post('/:year/:event_name/photo', async (req, res) => {
   await album.save().then(() => res.redirect('/'))
 })
 
-// update a photoalbum
+// update a Album
 router.put('/', async (req, res) => {})
 
 module.exports = router
