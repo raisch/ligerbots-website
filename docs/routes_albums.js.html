@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/albums.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/albums.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable camelcase, no-unused-vars */
+/** @module */
+
+const debug = require('debug')('lib/albums')
+const { _ } = require('../lib/utils')
+
+const express = require('express')
+
+const { PhotoAlbum } = require('../models/PhotoAlbum')
+
+/* Photo Album Record Example
+  {
+    active: true,
+    year: "2023",
+    event_name: "some event",
+    event_date: "2023-09-08T18:55:15.430Z",
+    photos: [
+      {
+        caption: "a pretty photo",
+        placement: "below",
+        location_uri: "https://something.staticflickr.com/...",
+        createdBy: "unknown",
+        updatedBy: "unknown",
+        createdAt: "2023-09-08T18:55:15.430Z",
+        updatedAt: "2023-09-08T18:55:15.430Z"
+      }, {
+        ...
+      }
+    ],
+    createdBy: "unknown",
+    updatedBy: "unknown",
+    createdAt: "2023-09-08T18:55:15.430Z",
+    updatedAt: "2023-09-08T18:55:15.430Z"
+  }
+*/
+
+const router = express.Router()
+
+/*
+GET /albums => returns a list of years
+GET /albums/:year/events => returns a list of events
+GET /albums/:year/events/:event_id/photos => returns a list of photos for an event
+
+POST /albums => create a new album
+PUT /albums/:album_id => update an existing album
+DELETE /albums/:album_id => delete an existing album
+*/
+
+/**
+ * Handler for default GET /albums route
+ *
+ * @param   {Request}  req
+ * @param   {Response}  res
+ *
+ * @return  {void}
+ *
+ * @example
+ * GET /api/v1/albums?filter=[year,...] => JSON
+ * GET /albums?filter=[year,...] => HTML
+ */
+router.get('/', async (req, res) => {
+  const projection = req.query?.filter ? req.query.filter.split(',') : ['year']
+
+  const recs = await PhotoAlbum.find({}, projection) // returns [ { _id: '', year: '2023' }, ... ]
+
+  debug('recs in /albums: %0', recs)
+
+  const years = _.sortedUniq(
+    _.map(recs, rec => rec.year) // [ '2023', '2022', '2023', ... ]
+      .sort((a, b) => a - b)
+  ) // returns [ 2022, 2023 ]
+
+  if (_.isDev() &amp;&amp; req.originalUrl.startsWith('/api/v1')) {
+    res.send({ years })
+    return
+  }
+
+  res.render('albums/year_list', {
+    years,
+    title: 'Photo Albums by Year'
+  })
+})
+
+/**
+ * Handler for GET /albums/:year/events route
+ *
+ * @param   {Request}  req
+ * @param   {Response}  res
+ *
+ * @return  {void}
+ *
+ * @example
+ * GET /api/v1/albums/2023/events => JSON
+ * GET /albums/2023/events => HTML
+ */
+router.get('/:year/events', async (req, res) => {
+  const year = req.params.year
+  const events = await PhotoAlbum.find({ year }) // , ['event_name', 'event_date'])
+
+  if (_.isDev() &amp;&amp; req.originalUrl.startsWith('/api/v1')) {
+    res.send(events)
+  }
+
+  res.render('albums/event_list', {
+    events,
+    year,
+    title: `Events for ${year}`,
+    fmt: e => {
+      // formatting helper function
+      return {
+        anchor: `/photos/${e.event.slug}`,
+        label: `${new Date(e.event.date).toDateString()}: ${e.event.name}`
+      }
+    }
+  })
+})
+
+/**
+ * Handler for GET /:year/events/:event_id/photos route
+ *
+ * @param   {Request}  req
+ * @param   {Response}  res
+ *
+ * @return  {void}
+ *
+ * @example
+ * GET /api/v1/albums
+ */
+router.get('/:year/events/:event_id/photos', async (req, res) => {
+  // route /albums/:year/events/:event_id
+  // display photos for a specific event
+
+  const { year, event_id } = req.params
+
+  const event = await PhotoAlbum.findOne({ year, _id: event_id })
+
+  if (!event) {
+    return res.status(404).send('Event not found')
+  }
+
+  const photos = _.get(event, 'photos', [])
+
+  if (_.isDev() &amp;&amp; req.originalUrl.startsWith('/api/v1')) {
+    res.send(photos)
+    return
+  }
+
+  res.render('albums/photo_list', {
+    photos,
+    event,
+    year,
+    title: `Photos for ${event.event_name}`,
+    fmt: p => ({
+      caption: p.caption,
+      img: p.location_uri
+    })
+  })
+})
+
+module.exports = router
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-models_Album.html">models/Album</a></li><li><a href="module-models_User.html">models/User</a></li><li><a href="module-models_article.html">models/article</a></li><li><a href="module-models_event.html">models/event</a></li><li><a href="module-models_photo.html">models/photo</a></li><li><a href="module-routes_albums.html">routes/albums</a></li><li><a href="module-routes_articles.html">routes/articles</a></li><li><a href="module-routes_events.html">routes/events</a></li><li><a href="module-routes_index.html">routes/index</a></li><li><a href="module-routes_main.html">routes/main</a></li><li><a href="module-routes_photos.html">routes/photos</a></li><li><a href="module-routes_users.html">routes/users</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Nov 10 2023 13:37:12 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
