@@ -1,216 +1,115 @@
 #!/usr/local/bin/node
-/* eslint-disable no-unused-vars */
 
-// Prime the db with some dummy photo data
+/**
+ * Prime the mongodb databse with mock data
+ *
+ * Design:
+ *
+ * 1. Connect to the database
+ * 2. Loop through each mock
+ * 3. Prime each collection from its mock
+ *      Clear existing records from the collection
+ *      Save records from the mock to the collection
+ * 4. Disconnect from the database
+ */
+
 const {
   _,
   assert,
   mongoose,
+  stringify,
   dbConnect,
-  dbDisconnect,
-  stringify
+  dbDisconnect
 } = require('../lib/utils')
-
-const { MONGODB_URI } = require('../etc/constants')
 
 const mocks = require('../etc/mocks')
 
-// process.on('unhandledRejection', (reason, p) => {
-//   console.error('Unhandled Rejection at:', p, 'reason:', reason)
-// })
-
-async function dropTable (mock) {
-  assert(_.isNonEmptyString(mock.name), 'mock must have a name')
-  assert(mongoose.connection.db !== null)
-  return mongoose.connection.dropCollection(mock.name)
-}
-
-async function saveRecord (mock, record) {
-  assert(_.isNonEmptyString(mock.name), 'mock must have a name')
-  const newRecord = new mock.model(record) // eslint-disable-line new-cap
-  return newRecord.save()
-}
-
-async function primeTable (mock) {
-  const { name, data } = mock
-  console.log(`priming ${name} collection...`)
-  const promises = []
-  data.forEach(d => {
-    promises.push(
-      saveRecord(mock, d).catch(err =>
-        console.error(`failed to save record to ${mock.name}: ${err}`)
-      )
-    )
-  })
-  promises.push(() => console.log(`finished priming ${mock.name}`))
-  return promises
-}
-
-async function completeTable (mock) {
-  console.log(`priming ${mock.name} is complete`)
-}
-
-const run = async () => {
-  console.log('connecting to db')
-  await mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-    // reconnectTries: Number.MAX_VALUE,
-    // reconnectInterval: 5000,
-    // useFindAndModify: false
-    // useCreateIndex: true,
-  })
-  console.log('connected')
-
-  let mock = mocks.albums
-  console.log('dropping albums')
-  if(mongoose.)
-  await dropTable(mock)
-
-  console.log('complete')
-
-  // .catch(err => )
-  // .then(() => console.log('connected'))
-  // .then(dropTable(mocks.albums))
-  // .catch(err => dieDieDie(`failed to drop ${mocks.albums.name}: ${err}`))
-  // .then(primeTable(mocks.albums))
-  // .catch(err => dieDieDie(`failed to prime ${mocks.albums.name}: ${err}`))
-  // .then(() => mongoose.connection.close())
-  // .catch(err => dieDieDie(`failed to close db connection: ${err}`))
-  // .then(() => console.log('complete'))
-
-  // const promises = _.chain(mocks)
-  //   .keys()
-  //   .map(k => [
-  //     dropTable(mocks[k]),
-  //     primeTable(mocks[k]),
-  //     completeTable(mocks[k])
-  //   ])
-  //   .flatten()
-  //   .value()
-}
-
-run().catch(err => console.error(`error: ${err}`))
-
-// === MAIN ===
-// dbConnect()
-//   .catch(err => dieDieDie(`failed to connect to mongoose: ${err}`))
-//   .then(dropArticles)
-//   .then(primeArticles)
-//   .then(dropAlbums)
-//   .then(primeAlbums)
-//   .then(dropUsers)
-//   .then(primeUsers)
-//   .catch(dieDieDie)
-//   .then(waitToComplete)
-
-// // === HELPERS ===
+// This will only be called if we have failed to handle a Promise rejection correctly.
+process.on('unhandledRejection', (reason, p) => {
+  console.error('Unhandled Rejection at:', p, 'reason:', reason)
+  process.exit(-1)
+})
 
 function dieDieDie (msg) {
   console.error(msg)
   process.exit(-1)
 }
 
-// // === ARTICLES ===
-// async function dropArticles () {
-//   console.log('dropping Articles collection...')
-//   return mongoose.connection.dropCollection('articles')
-// }
+async function clearCollection (mock) {
+  const { name, model } = mock
+  assert(_.isNonEmptyString(name), 'mock must have a name')
+  assert(_.isFunction(model), 'mock must have a model')
 
-// function saveArticle (article) {
-//   return new Promise((resolve, reject) => {
-//     try {
-//       const newArticle = new Article(article)
-//       newArticle.save()
-//       console.log('saved article:', newArticle)
-//       resolve(newArticle)
-//     } catch (err) {
-//       console.error('Error saving article', err)
-//       reject(err)
-//     }
-//   })
-// }
+  // collections are automatically created by the models
+  const collectionNames = _.keys(mongoose.connection.collections)
+  // if we try to clear a collection that doesn't exist, ignore it
+  if (!collectionNames.includes(name)) {
+    console.log(`ignoring unknown collection '${name}'`)
+    return
+  }
+  return model.deleteMany({})
+}
 
-// function primeArticles () {
-//   console.log('priming Articles collection...')
-//   const articles = []
-//   articlesData.forEach(d => {
-//     articles.push(saveArticle(d))
-//   })
-//   return Promise.all(articles)
-// }
+async function saveRecord (mock, record) {
+  const { name, model: Model } = mock
+  assert(_.isNonEmptyString(name), 'mock must have a name')
+  assert(_.isFunction(Model), 'mock must have a model')
+  assert(_.isNonEmptyObject(record), 'record must be an object')
+  console.log(`saving record to ${name} collection...(${stringify(record)})`)
+  const newRecord = new Model(record)
+  return newRecord.save()
+}
 
-// // === ALBUMS ===
-// async function dropAlbums () {
-//   console.log('dropping Albums collection...')
-//   try {
-//     mongoose.connection.dropCollection('albums')
-//   } catch (err) {
-//     /* purposefully ignored */
-//   }
-// }
+async function saveRecords (mock) {
+  const { name, data } = mock
+  assert(_.isNonEmptyString(name), 'mock must have a name')
+  assert(_.isNonEmptyArray(data), 'data must be an array')
 
-// function saveAlbum (album) {
-//   return new Promise((resolve, reject) => {
-//     try {
-//       const newAlbum = new Album(album)
-//       newAlbum.save()
-//       console.log('saved photo album:', newAlbum)
-//       resolve(newAlbum)
-//     } catch (err) {
-//       console.error('Error saving album:', err)
-//       reject(err)
-//     }
-//   })
-// }
+  const promises = data.map(record => {
+    return saveRecord(mock, record).catch(err =>
+      console.error(`failed to save record to ${name}: ${err}`)
+    )
+  })
 
-// async function primeAlbums () {
-//   console.log('priming Albums collection...')
-//   const albums = []
-//   albumsData.forEach(d => {
-//     albums.push(saveAlbum(d))
-//   })
-//   return Promise.all(albums)
-// }
+  return Promise.all(promises)
+}
 
-// // === USERS ===
-// async function dropUsers () {
-//   console.log('dropping Users collection...')
-//   try {
-//     mongoose.connection.dropCollection('users')
-//   } catch (err) {
-//     /* purposefully ignored */
-//   }
-// }
+async function primeCollection (mock) {
+  const { name, data } = mock
+  console.log(`clearing ${name} collection...`)
+  await clearCollection(mock)
+  console.log(`saving ${data.length} records to ${name} collection...`)
+  await saveRecords(mock)
+}
 
-// function saveUser (user) {
-//   return new Promise((resolve, reject) => {
-//     try {
-//       const newUser = new User(user)
-//       newUser.save()
-//       console.log('saved user:', newUser)
-//       resolve(newUser)
-//     } catch (err) {
-//       console.error('Error saving user:', err)
-//       reject(err)
-//     }
-//   })
-// }
+async function primeCollections () {
+  return Promise.all(_.chain(mocks).keys().map(key => {
+    const mock = mocks[key]
+    console.log(`priming ${mock.name} collection...`)
+    return primeCollection(mock)
+  }).value())
+}
 
-// async function primeUsers () {
-//   console.log('priming Users collection...')
-//   const users = []
-//   usersData.forEach(d => {
-//     users.push(saveUser(d))
-//   })
-//   return Promise.all(users)
-// }
+async function main () {
+  try {
+    console.log('connecting to db')
+    await dbConnect()
+  } catch (err) {
+    dieDieDie(`failed to connect to database: ${err}`)
+  }
 
-// async function waitToComplete () {
-//   console.log('waiting to complete')
-//   setTimeout(async () => {
-//     await dbDisconnect()
-//     console.log('complete')
-//     process.exit(0)
-//   }, 1000)
-// }
+  try {
+    console.log('priming collections')
+    await primeCollections()
+  } catch (err) {
+    dieDieDie(`failed to prime collections: ${err}`)
+  }
+
+  console.log('disconnecting from db')
+  await dbDisconnect()
+
+  console.log('All collections primed successfully!')
+  process.exit(0)
+}
+
+main()

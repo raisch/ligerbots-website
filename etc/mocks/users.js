@@ -1,7 +1,7 @@
 const { User } = require('../../models/User')
 
 module.exports = {
-  name: 'Users',
+  name: 'users',
   model: User,
   data: [
     {
