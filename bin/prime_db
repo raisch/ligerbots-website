@@ -19,37 +19,16 @@ const mocks = require('../etc/mocks')
 //   console.error('Unhandled Rejection at:', p, 'reason:', reason)
 // })
 
-function dropTable (mock) {
+async function dropTable (mock) {
   assert(_.isNonEmptyString(mock.name), 'mock must have a name')
-  return new Promise((resolve, reject) => {
-    try {
-      console.log(`dropping ${mock.name} collection...`)
-      mongoose.connection.dropCollection(mock.name)
-    } catch (err) {
-      reject(new Error(`failed to drop ${mock.name} collection: ${err}`))
-    }
-    resolve()
-  })
+  assert(mongoose.connection.db !== null)
+  return mongoose.connection.dropCollection(mock.name)
 }
 
-function saveRecord (mock, record) {
+async function saveRecord (mock, record) {
   assert(_.isNonEmptyString(mock.name), 'mock must have a name')
-  return new Promise((resolve, reject) => {
-    try {
-      // eslint-disable-next-line new-cap
-      const newRecord = new mock.model(record)
-      newRecord
-        .save()
-        .catch(err =>
-          console.error(`failed to save ${newRecord} to ${mock.name}: ${err}`)
-        )
-      console.log(`saved ${stringify(record, null, 2)} to ${mock.name}`)
-      resolve(newRecord)
-    } catch (err) {
-      console.error(`Failed to save ${mock.name}: ${err}`)
-      reject(err)
-    }
-  })
+  const newRecord = new mock.model(record) // eslint-disable-line new-cap
+  return newRecord.save()
 }
 
 async function primeTable (mock) {
@@ -73,37 +52,45 @@ async function completeTable (mock) {
 
 const run = async () => {
   console.log('connecting to db')
-  await mongoose
-    .connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-      // reconnectTries: Number.MAX_VALUE,
-      // reconnectInterval: 5000,
-      // useFindAndModify: false
-      // useCreateIndex: true,
-    })
-    .catch(err => dieDieDie(`failed to connect to mongoose: ${err}`))
+  await mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+    // reconnectTries: Number.MAX_VALUE,
+    // reconnectInterval: 5000,
+    // useFindAndModify: false
+    // useCreateIndex: true,
+  })
+  console.log('connected')
 
-  const promises = _.chain(mocks)
-    .keys()
-    .map(k => [
-      dropTable(mocks[k]),
-      primeTable(mocks[k]),
-      completeTable(mocks[k])
-    ])
-    .flatten()
-    .value()
-
-  await Promise.all(promises).catch(err => dieDieDie(err))
-
-  await mongoose.connection
-    .close()
-    .catch(err => dieDieDie(`failed to close db connection: ${err}`))
+  let mock = mocks.albums
+  console.log('dropping albums')
+  if(mongoose.)
+  await dropTable(mock)
 
   console.log('complete')
+
+  // .catch(err => )
+  // .then(() => console.log('connected'))
+  // .then(dropTable(mocks.albums))
+  // .catch(err => dieDieDie(`failed to drop ${mocks.albums.name}: ${err}`))
+  // .then(primeTable(mocks.albums))
+  // .catch(err => dieDieDie(`failed to prime ${mocks.albums.name}: ${err}`))
+  // .then(() => mongoose.connection.close())
+  // .catch(err => dieDieDie(`failed to close db connection: ${err}`))
+  // .then(() => console.log('complete'))
+
+  // const promises = _.chain(mocks)
+  //   .keys()
+  //   .map(k => [
+  //     dropTable(mocks[k]),
+  //     primeTable(mocks[k]),
+  //     completeTable(mocks[k])
+  //   ])
+  //   .flatten()
+  //   .value()
 }
 
-run()
+run().catch(err => console.error(`error: ${err}`))
 
 // === MAIN ===
 // dbConnect()
