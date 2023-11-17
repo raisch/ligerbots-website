@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/_meta') %>
+  <title>Users</title>
+</head>
+
+<body>
+  <%- include('../partials/_header') %>
+  <div class="body-container">
+    <%- include('../partials/_sideBarLeft')%>
+
+
+    <div class="directory-container">
+      <div class="directory-text">Directory</div>
+
+      <hr />
+        
+      <h2>The information on this page is confidential - it is only avalible to registered and approved users</h2>
+      
+      <div class="directory-dropdown">
+        <button class="directory-dropbtn">Sort</button>
+        <div class="directory-dropdown-content">
+          <a href="#">Link 1</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+        </div>
+      </div> 
+      <% 
+        const numCols = 3
+        const numRows = Math.trunc(events.length/numCols)+1 
+        %>
+      <table class="directory-table">
+        <% for(let row=0; row<numRows; row++){ %>
+        <tr class="directory-table-row">
+          <% for(let col=0; col<3; col++) {
+                  const index = row*numCols+col
+                  let evt = events[index]     
+              %>
+          //dummy code
+        <div class="directory-item">
+            <img src="<%user.imageurl%> class="student-img">
+            <div class="directory-text">
+                <ol>
+                <li class="directory-firstname"><%user.firstName%></li>
+                <li class="directory-lastname"><%user.lastName%></li>
+                <li class="directory-list-text"><%user.email%></li>
+                <li class="directory-list-text"><%user.phone%></li>
+                <li class="directory-list-text"><%user.address%></li>
+                <li class="directory-list-text"><%user.school%></li>
+                <li class="directory-list-text"><%user.kind%></li>
+                </ol>
+        </div>
+            
+            </div>
+                  </td>
+                  <% } %>
+              <% } %>
+            </tr>
+          <% } %>
+        </table>
+        </div>
+    
+        <%-include('../partials/_sideBarRight')%>
+    </div>
+        <%- include('../partials/_footer')%>
+  </body>
+</html>
