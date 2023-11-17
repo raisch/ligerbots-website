@@ -10,7 +10,7 @@ const { _, mongoose, slugify } = require('../lib/utils')
 /**
  * @type {UserKindList}
  */
-const UserKindList = ['student', 'coach', 'mentor', 'parent', 'other']
+const UserKindList = ['student', 'coach', 'mentor', 'parent', 'executive', 'alumni']
 
 /**
  * @typedef {Object} User

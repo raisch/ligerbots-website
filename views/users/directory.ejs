@@ -19,13 +19,18 @@
         
       <h2>The information on this page is confidential - it is only avalible to registered and approved users</h2>
       
-      <div class="directory-dropdown">
-        <button class="directory-dropbtn">Sort</button>
-        <div class="directory-dropdown-content">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
-        </div>
+      <select id="filterValue" onchange="GetSelectedTextValue(this)">
+        <option value=""></option>
+        <option value="user.firstName">First Name</option>
+        <option value="user.lastName">Last Name</option>
+        <option value="user.kind.coach">Coach</option>
+        <option value="user.kind.Executive">Executive</option>
+        <option value="user.kind.student">Student</option>
+        <option value="user.kind.mentor">Mentor</option>
+        <option value="user.kind.parent">Parent</option>
+        <option value="user.school">School</option>
+        <option value="user.kind.alumni">Alumni</option>
+    </select>
       </div> 
       <% 
         const numCols = 3
