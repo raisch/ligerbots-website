@@ -5,11 +5,8 @@
 GET /events => returns all events
 GET /events/:event_id => returns a single event
 
-GET /events?year=:year => returns a list of all events for a year
-GET /events?slug=:slug => returns a specific event by slug
-
 POST /events => create new event
-UPDATE /events/:event_id => update an existing event
+PUT /events/:event_id => update an existing event
 DELETE /events/:event_id => delete an existing event
 */
 
@@ -22,12 +19,24 @@ const { PhotoAlbum } = require('../models/PhotoAlbum')
 
 const router = express.Router()
 
-router.get('/', async (req, res) => {
-  // if query.slug
-  // else if query.year
+router.get('/', async (req, res) => { // return create event view
+
 })
 
-router.get('/:event_id', async (req, res) => {
+router.get('/:event_id', async (req, res) => { // return update event view
+
+})
+
+router.post('/', async (req, res) => { // save new event, return success view
+
+})
+
+router.put('/:event_id', async (req, res) => { // update existing event, return success view
+
+})
+
+router.delete('/:event_id', async (req, res) => { // delete event, return success
+
 })
 
 module.exports = router
