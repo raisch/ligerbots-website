@@ -7,7 +7,7 @@ const { User } = require('../models/User')
 const router = express.Router()
 //TODO
 /*
-filter value and  filter will be taken from the page and then the data will be sent back 
+filter value and filter will be taken from the page and then the data will be sent back 
 I have no idea how im going to do this but here is a basic route to get started
 if filterValue is ommited it will render every user 
 if filter is does not get a value it does nothing 
