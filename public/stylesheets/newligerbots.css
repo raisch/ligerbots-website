@@ -14,7 +14,6 @@
   
   --red: red;
 
-  border: 1px solid var(--red);  
 }
 /* * {
     margin: 0;
@@ -25,6 +24,13 @@ body {
   padding: 0;
   font-family: "inter", sans-serif;
 }
+
+.error-main-body h2.error-text-header {
+  text-align: center;
+  font-size: 2em;
+  color: var(--liger-blue);
+}
+
 a{
   color: var(--liger-blue);
   text-decoration: none;
@@ -32,19 +38,22 @@ a{
 
 
 .logo-silver {
-    background-image: url(/images/header/tie-dye-silver.jpg);
-    background-size: cover; 
-    background-position: center; 
-    width: 100vw;
-    margin: 0; 
-    padding: 0;
+  width: 100vw;
+  margin: 0; 
+  padding: 0;
+  display: none;
 }
 
 
 .header-logo-row {
+  padding: 18px;
   display: flex;
   align-items: center;
   flex-grow: 1;
+  background-image: linear-gradient(transparent, #7f7f7f7f), url(/images/header/tie-dye-silver.jpg), linear-gradient(transparent, #7f7f7f7f);
+  background-size: cover; 
+  background-position: center; 
+  box-sizing: border-box;
 }
 
 .header-logo {
@@ -54,6 +63,8 @@ a{
 .header-logo.large {
   flex: 2; 
   max-width: calc(60% - 10px); 
+  box-shadow: 0 0 10px 10px white;
+
 }
 
 .header-logo-small {
